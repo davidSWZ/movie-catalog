@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "./App.css";
 
-import SearchBox from "./components/SearchBox";
-import Scroll from "./components/Scroll";
-import CardList from "./components/CardList";
+import SearchPage from "./components/SearchPage";
 
 function App() {
   //Global states definitions
@@ -28,16 +26,11 @@ function App() {
       <Switch>
         {/*Route that display the root of the app, to search movies*/}
         <Route exact path="/">
-          <div className="container">
-            <h1>Movie Kata.log</h1>
-            <SearchBox
-              fetchAPI={() => console.log("fetchAPI with: " + searchField)}
-              setSearchField={setSearchField}
-            />
-            <Scroll>
-              <CardList movies={movies} />
-            </Scroll>
-          </div>
+          <SearchPage
+            searchField={searchField}
+            setSearchField={setSearchField}
+            movies={movies}
+          />
         </Route>
 
         {/*Route that display the details of the selected movie*/}
