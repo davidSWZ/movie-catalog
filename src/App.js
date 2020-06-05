@@ -3,10 +3,12 @@ import "./App.css";
 
 import SearchBox from "./components/SearchBox";
 import Scroll from "./components/Scroll";
+import CardList from "./components/CardList";
 
 function App() {
   //Global states definitions
-  const [searchField, setSearchField] = useState(""); //state to handle the SearchBox
+  const [searchField, setSearchField] = useState(""); //hook to handle the SearchBox
+  const [movies, setMovies] = useState([1, 2]); //hook to handle the movies list
 
   return (
     <div className="container">
@@ -16,7 +18,7 @@ function App() {
         setSearchField={setSearchField}
       />
       <Scroll>
-        <p>Hello World</p>
+        <CardList movies={movies} />
       </Scroll>
     </div>
   );
