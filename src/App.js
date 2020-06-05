@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./App.css";
 
 import SearchBox from "./components/SearchBox";
+import Scroll from "./components/Scroll";
 
 function App() {
   //Global states definitions
@@ -14,6 +15,9 @@ function App() {
         fetchAPI={() => console.log("fetchAPI with: " + searchField)}
         setSearchField={setSearchField}
       />
+      <Scroll>
+        <p>Hello World</p>
+      </Scroll>
     </div>
   );
 }
