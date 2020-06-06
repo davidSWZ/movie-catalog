@@ -8,10 +8,7 @@ function SearchPage({ searchField, setSearchField, movies }) {
   return (
     <div className="container">
       <h1>Movie Kata.log</h1>
-      <SearchBox
-        fetchAPI={() => console.log("fetchAPI with: " + searchField)}
-        setSearchField={setSearchField}
-      />
+      <SearchBox setSearchField={setSearchField} searchField={searchField} />
       <Scroll>
         <CardList movies={movies} />
       </Scroll>
