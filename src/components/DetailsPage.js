@@ -29,9 +29,9 @@ function DetailsPage({ movies }) {
     <div className="container">
       <h1>{selectedMovie.title}</h1>
       <Poster movie={selectedMovie} />
-      <p>{selectedMovie.rating}</p>
-      <p>{selectedMovie.genre}</p>
-      <p>{selectedMovie.date}</p>
+      <p>Release date: {selectedMovie.date}</p>
+      <p>Rating: {selectedMovie.rating}</p>
+      <p>Genre: {selectedMovie.genre}</p>
 
       <Link to="/">
         <button>Back to search results</button>
