@@ -2,18 +2,20 @@ import React, { useState } from "react";
 import handleMovieState from "./handleMovieState";
 
 //Return the search input component
-function SearchBox({ movies, setMovies }) {
-  const [searchField, setSearchField] = useState(""); //hook to handle the SearchBox
+function SearchBox({ handleMovies }) {
+  const [searchField, setSearchField] = useState(); //hook to handle the SearchBox
   return (
     <div>
       <input
         type="search"
         placeholder="search a movie"
-        onChange={(e) => setSearchField(e.target.value)}
+        onChange={(e) => {
+          setSearchField(e.target.value);
+        }}
       />
       <button
         onClick={() => {
-          handleMovieState(movies, setMovies, searchField);
+          if (searchField) handleMovieState(handleMovies, searchField);
         }}
       >
         OK
