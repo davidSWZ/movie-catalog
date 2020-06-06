@@ -1,4 +1,5 @@
 import React from "react";
+import { BrowserRouter as Redirect, Link } from "react-router-dom";
 
 function Card({ movie }) {
   let posterPath = "";
@@ -9,11 +10,12 @@ function Card({ movie }) {
       "https://fr.zenit.org/wp-content/uploads/2018/05/no-image-icon-1536x1536.png";
   }
   return (
-    <div className="card">
-      <img src={posterPath} alt="movie poster" />
-      <div>{movie.title}</div>
-      <button className="detail-btn">Details</button>
-    </div>
+    <Link to={"/" + movie.title}>
+      <div className="card">
+        <img src={posterPath} alt="movie poster" />
+        <div>{movie.title}</div>
+      </div>
+    </Link>
   );
 }
 

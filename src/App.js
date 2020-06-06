@@ -33,7 +33,7 @@ class App extends Component {
           </Route>
 
           {/*Route that display the details of the selected movie*/}
-          <Route path="/:movieTitle/:movieId">
+          <Route path="/:movieTitle">
             <DetailsPage movie={movies[0]} />
           </Route>
         </Switch>
