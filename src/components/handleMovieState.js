@@ -2,14 +2,13 @@ import fetchAPI from "./api";
 
 //Take the response from the API and for each movie, keep only :
 //title, poster, ratings, genre and release date
-const handleMovieState = (setMovies, searchField) => {
+const handleMovieState = (movies, setMovies, searchField) => {
   //reinitiate the movie state to start a new search
   setMovies([]);
-
   //Call the API
-  fetchAPI(searchField).then((movies) =>
+  fetchAPI(searchField).then((moviesList) =>
     //then for each movie, only push the needed data to the movies state
-    movies.map((movie) => {
+    moviesList.map((movie) => {
       setMovies([
         ...movies,
         {

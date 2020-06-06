@@ -8,7 +8,7 @@ function SearchPage({ movies, setMovies }) {
   return (
     <div className="container">
       <h1>Movie Kata.log</h1>
-      <SearchBox setMovies={setMovies} />
+      <SearchBox movies={movies} setMovies={setMovies} />
       <Scroll>
         <CardList movies={movies} />
       </Scroll>
