@@ -15,7 +15,7 @@ const handleMovieState = (handleMovies, searchField) => {
         poster: movie.poster_path,
         title: movie.title,
         rating: movie.vote_average,
-        // TODO genre
+        genre: movie.genre_ids,
         date: movie.release_date,
       });
       return null;
