@@ -34,6 +34,7 @@ function App() {
             searchField={searchField}
             setSearchField={setSearchField}
             movies={movies}
+            setMovies={setMovies}
           />
         </Route>
 
