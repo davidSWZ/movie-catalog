@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "./App.css";
 
 import SearchPage from "./components/SearchPage";
+import DetailsPage from "./components/DetailsPage";
 
 function App() {
   //Global states definitions
@@ -12,6 +13,9 @@ function App() {
       poster:
         "https://fr.web.img2.acsta.net/medias/nmedia/18/35/91/26/18686482.jpg",
       title: "Back to the futur",
+      rating: "4",
+      genre: "comedie",
+      releaseDate: "2020",
     },
     {
       poster:
@@ -35,7 +39,7 @@ function App() {
 
         {/*Route that display the details of the selected movie*/}
         <Route path="/:movieTitle/:movieId">
-          <p>Details Page</p>
+          <DetailsPage movie={movies[0]} />
         </Route>
       </Switch>
     </Router>
