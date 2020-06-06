@@ -12,6 +12,7 @@ function Card({ movie }) {
     <div className="card">
       <img src={posterPath} alt="movie poster" />
       <div>{movie.title}</div>
+      <button className="detail-btn">Details</button>
     </div>
   );
 }
