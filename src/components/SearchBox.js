@@ -4,6 +4,7 @@ import handleMovieState from "./handleMovieState";
 //Return the search input component
 function SearchBox({ handleMovies }) {
   const [searchField, setSearchField] = useState(); //hook to handle the SearchBox
+
   return (
     <div>
       <input
