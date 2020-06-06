@@ -7,6 +7,7 @@ function GenreVSGenreId(genres, genresId) {
   genresId.map((genreId) => {
     const genreToKeep = genres.genres.find((genre) => genre.id === genreId);
     filteredGenre.push(genreToKeep.name);
+    return null;
   });
 
   return filteredGenre;

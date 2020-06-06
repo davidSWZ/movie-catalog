@@ -5,6 +5,10 @@ import handleMovieState from "./handleMovieState";
 function SearchBox({ handleMovies }) {
   const [searchField, setSearchField] = useState(); //hook to handle the SearchBox
 
+  //Setup for the input timer
+  let typingTimer; //timer identifier
+  const typingDelay = 5000; //time in ms
+
   return (
     <div>
       <input
@@ -13,6 +17,13 @@ function SearchBox({ handleMovies }) {
         onChange={(e) => {
           setSearchField(e.target.value);
         }}
+        onKeyUp={() => {
+          clearTimeout(typingTimer);
+          typingTimer = setTimeout(() => {
+            if (searchField) handleMovieState(handleMovies, searchField);
+          }, typingDelay);
+        }}
+        onKeyDown={() => clearTimeout(typingTimer)}
       />
       <button
         onClick={() => {

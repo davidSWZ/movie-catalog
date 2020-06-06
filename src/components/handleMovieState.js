@@ -10,7 +10,6 @@ function handleMovieState(handleMovies, searchField) {
 
   //Call the API for the genres
   fetchApi.getGenre().then((genreList) => {
-    console.log(genreList);
     //Call the API for the movies
     fetchApi.getMovies(searchField).then((moviesList) => {
       if (!moviesList) return;
