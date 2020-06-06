@@ -1,18 +1,14 @@
 import React from "react";
-import { BrowserRouter as Link } from "react-router-dom";
+//The redirect is not used but if deleted the Link doesn't work
+import { BrowserRouter as Redirect, Link } from "react-router-dom";
+
+import Poster from "./Poster";
 
 function Card({ movie }) {
-  let posterPath = "";
-  if (movie.poster != null) {
-    posterPath = "http://image.tmdb.org/t/p/w185" + movie.poster;
-  } else {
-    posterPath =
-      "https://fr.zenit.org/wp-content/uploads/2018/05/no-image-icon-1536x1536.png";
-  }
   return (
     <Link to={"/" + movie.title + "/" + movie.id}>
       <div className="card">
-        <img src={posterPath} alt="movie poster" />
+        <Poster movie={movie} />
         <div>{movie.title}</div>
       </div>
     </Link>
