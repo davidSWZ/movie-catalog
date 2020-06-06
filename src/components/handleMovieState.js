@@ -20,6 +20,7 @@ const handleMovieState = (setMovies, searchField) => {
           date: movie.releaseEvents_date,
         },
       ]);
+      return null;
     })
   );
 };
