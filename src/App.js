@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 
 import SearchPage from "./components/SearchPage";
@@ -7,7 +7,6 @@ import DetailsPage from "./components/DetailsPage";
 
 function App() {
   //Global states definitions
-  const [searchField, setSearchField] = useState(""); //hook to handle the SearchBox
   const [movies, setMovies] = useState([]); //hook to handle the movies list
 
   return (
@@ -16,12 +15,7 @@ function App() {
       <Switch>
         {/*Route that display the root of the app, to search movies*/}
         <Route exact path="/">
-          <SearchPage
-            searchField={searchField}
-            setSearchField={setSearchField}
-            movies={movies}
-            setMovies={setMovies}
-          />
+          <SearchPage movies={movies} setMovies={setMovies} />
         </Route>
 
         {/*Route that display the details of the selected movie*/}

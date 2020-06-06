@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import handleMovieState from "./handleMovieState";
 
 //Return the search input component
-function SearchBox({ searchField, setSearchField, movies, setMovies }) {
+function SearchBox({ movies, setMovies }) {
+  const [searchField, setSearchField] = useState(""); //hook to handle the SearchBox
+
   return (
     <div>
       <input
@@ -12,7 +14,7 @@ function SearchBox({ searchField, setSearchField, movies, setMovies }) {
       />
       <button
         onClick={() => {
-          handleMovieState(setMovies, searchField);
+          handleMovieState(setMovies, searchField, movies);
         }}
       >
         OK
