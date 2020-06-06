@@ -8,21 +8,7 @@ import DetailsPage from "./components/DetailsPage";
 function App() {
   //Global states definitions
   const [searchField, setSearchField] = useState(""); //hook to handle the SearchBox
-  const [movies, setMovies] = useState([
-    {
-      poster:
-        "https://fr.web.img2.acsta.net/medias/nmedia/18/35/91/26/18686482.jpg",
-      title: "Back to the futur",
-      rating: "4",
-      genre: "comedie",
-      releaseDate: "2020",
-    },
-    {
-      poster:
-        "https://fr.web.img2.acsta.net/medias/nmedia/18/35/91/26/18686482.jpg",
-      title: "Back to the futur",
-    },
-  ]); //hook to handle the movies list
+  const [movies, setMovies] = useState([]); //hook to handle the movies list
 
   return (
     // Router allow to switch from the two pages of the app
