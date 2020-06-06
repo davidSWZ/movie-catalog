@@ -1,5 +1,5 @@
 import React from "react";
-import fetchAPI from "./api";
+import handleMovieState from "./handleMovieState";
 
 //Return the search input component
 function SearchBox({ searchField, setSearchField, movies, setMovies }) {
@@ -12,7 +12,7 @@ function SearchBox({ searchField, setSearchField, movies, setMovies }) {
       />
       <button
         onClick={() => {
-          //handleMovieState();
+          handleMovieState(setMovies, searchField);
         }}
       >
         OK
