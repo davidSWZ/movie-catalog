@@ -7,7 +7,6 @@ import Poster from "./Poster";
 //Return a page with the details of a selected movie
 function DetailsPage({ movies }) {
   let { id } = useParams();
-  console.log(movies);
 
   //Prevent someone to accidentally go to the DetailsPage and have an error
   if (movies.length === 0)
