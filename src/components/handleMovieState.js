@@ -11,6 +11,7 @@ const handleMovieState = (handleMovies, searchField) => {
     //then for each movie, only push the needed data to the newMovieList
     moviesList.map((movie) => {
       newMovieList.push({
+        id: movie.id,
         poster: movie.poster_path,
         title: movie.title,
         rating: movie.vote_average,
