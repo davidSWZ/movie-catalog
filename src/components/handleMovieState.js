@@ -8,25 +8,22 @@ function handleMovieState(handleMovies, searchField) {
   //create variable to compile only the needed informations from the film
   let newMovieList = [];
 
-  //Call the API for the genres
-  fetchApi.getGenre().then((genreList) => {
-    //Call the API for the movies
-    fetchApi.getMovies(searchField).then((moviesList) => {
-      if (!moviesList) return;
-      //then for each movie, only push the needed data to the newMovieList
-      moviesList.map((movie) => {
-        newMovieList.push({
-          id: movie.id,
-          poster: movie.poster_path,
-          title: movie.title,
-          rating: movie.vote_average,
-          genre: GenreVSGenreId(genreList, movie.genre_ids),
-          date: movie.release_date,
-        });
-        return null;
+  //Call the API for the movies
+  fetchApi.getMovies(searchField).then((moviesList) => {
+    if (!moviesList) return;
+    //then for each movie, only push the needed data to the newMovieList
+    moviesList.map((movie) => {
+      newMovieList.push({
+        id: movie.id,
+        poster: movie.poster_path,
+        title: movie.title,
+        rating: movie.vote_average,
+        genre: movie.genre_ids,
+        date: movie.release_date,
       });
-      handleMovies(newMovieList);
+      return null;
     });
+    handleMovies(newMovieList);
   });
 }
 

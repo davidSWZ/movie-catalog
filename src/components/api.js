@@ -14,7 +14,7 @@ const getMovies = async (searchField) => {
   return response.results; // return only the movies array from the response
 };
 
-const getGenre = async () => {
+const getGenres = async () => {
   //Compose the URL for the genre request
   const genreRequest =
     "https://api.themoviedb.org/3/genre/movie/list?api_key=" +
@@ -25,4 +25,4 @@ const getGenre = async () => {
   return response; // return only the movies array from the response
 };
 
-export default { getMovies, getGenre };
+export default { getMovies, getGenres };

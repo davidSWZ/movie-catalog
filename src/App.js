@@ -1,8 +1,8 @@
 import React, { Component } from "react";
+import fetchApi from "./components/api";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 
-//Import components
 import SearchPage from "./components/SearchPage";
 import DetailsPage from "./components/DetailsPage";
 
@@ -10,8 +10,20 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      movies: [], // State to handle the movie list
+      movies: [],
+      genres: [],
     };
+  }
+
+  componentDidMount() {
+    fetchApi.getGenres().then(
+      (genres) => {
+        this.setState({ genres: genres });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   //Handle the changes on the movies state
@@ -20,21 +32,17 @@ class App extends Component {
   };
 
   render() {
-    //Extract movies from this state
-    const { movies } = this.state;
+    const { movies, genres } = this.state;
 
     return (
-      // Router allow to switch from the two pages of the app
       <Router>
         <Switch>
-          {/*Route that display the root of the app, to search movies*/}
           <Route exact path="/">
             <SearchPage movies={movies} handleMovies={this.handleMovies} />
           </Route>
 
-          {/*Route that display the details of the selected movie*/}
           <Route path="/:movieTitle/:id">
-            <DetailsPage movies={movies} />
+            <DetailsPage movies={(movies, genres)} />
           </Route>
         </Switch>
       </Router>
