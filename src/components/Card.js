@@ -9,7 +9,7 @@ function Card({ movie }) {
     <Link to={"/" + movie.title + "/" + movie.id}>
       <div className="card">
         <Poster movie={movie} />
-        <div>{movie.title}</div>
+        <div className="title">{movie.title}</div>
       </div>
     </Link>
   );

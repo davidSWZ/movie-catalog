@@ -12,7 +12,9 @@ function DetailsPage({ movies }) {
   if (movies.length === 0)
     return (
       <div className="container">
-        <h1>Please come back to the landing page and search movies again</h1>
+        <h1 className="page-name">
+          Please come back to the landing page and search movies again
+        </h1>
         <Link to="/">
           <button>Back to search</button>
         </Link>
@@ -26,14 +28,21 @@ function DetailsPage({ movies }) {
 
   return (
     <div className="container">
-      <h1>{selectedMovie.title}</h1>
+      <h1 className="page-name">{selectedMovie.title}</h1>
       <Poster movie={selectedMovie} />
-      <p>Release date: {selectedMovie.date}</p>
-      <p>Rating: {selectedMovie.rating}</p>
-      <p>Genre: {selectedMovie.genre}</p>
+      <p>
+        Release date:
+        <span className="details-info"> {selectedMovie.date} </span>
+      </p>
+      <p>
+        Rating: <span className="details-info"> {selectedMovie.rating} </span>{" "}
+      </p>
+      <p>
+        Genre: <span className="details-info"> {selectedMovie.genre} </span>{" "}
+      </p>
 
       <Link to="/">
-        <button>Back to search results</button>
+        <button>Back to search</button>
       </Link>
     </div>
   );

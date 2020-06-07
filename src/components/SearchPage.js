@@ -9,7 +9,7 @@ import CardList from "./CardList";
 function SearchPage({ movies, handleMovies }) {
   return (
     <div className="container">
-      <h1>Movie Kata.log</h1>
+      <h1 className="page-name">MOVIE KATA.LOG</h1>
       <SearchBox handleMovies={handleMovies} />
       <Scroll>
         <CardList movies={movies} />
