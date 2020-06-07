@@ -1,13 +1,33 @@
 import React, { useState } from "react";
-import handleMovieState from "./handleMovieState";
+import fetchApi from "./api";
 
-//Return the search input component
 function SearchBox({ handleMovies }) {
   const [searchField, setSearchField] = useState(); //hook to handle the SearchBox
 
   //Setup for the input timer
   let typingTimer; //timer identifier
   const typingDelay = 5000; //time in ms
+
+  const searchMovies = () => {
+    fetchApi.getMovies(searchField).then((movies) => {
+      if (!movies) return;
+
+      //keep necesary data
+      movies.forEach((movie) => {
+        delete movie.popularity;
+        delete movie.vote_count;
+        delete movie.video;
+        delete movie.adult;
+        delete movie.backdrop_path;
+        delete movie.original_language;
+        delete movie.original_title;
+        delete movie.overview;
+      });
+
+      //Save movies in state
+      handleMovies(movies);
+    });
+  };
 
   return (
     <div>
@@ -20,14 +40,14 @@ function SearchBox({ handleMovies }) {
         onKeyUp={() => {
           clearTimeout(typingTimer);
           typingTimer = setTimeout(() => {
-            if (searchField) handleMovieState(handleMovies, searchField);
+            if (searchField) searchMovies();
           }, typingDelay);
         }}
         onKeyDown={() => clearTimeout(typingTimer)}
       />
       <button
         onClick={() => {
-          if (searchField) handleMovieState(handleMovies, searchField);
+          if (searchField) searchMovies();
         }}
       >
         OK

@@ -34,10 +34,11 @@ function DetailsPage({ movies, genres }) {
       </div>
       <p>
         Release date:
-        <span className="details-info"> {selectedMovie.date} </span>
+        <span className="details-info"> {selectedMovie.release_date} </span>
       </p>
       <p>
-        Rating: <span className="details-info"> {selectedMovie.rating} </span>{" "}
+        Rating:{" "}
+        <span className="details-info"> {selectedMovie.vote_average} </span>{" "}
       </p>
       <p>
         Genre:{" "}
