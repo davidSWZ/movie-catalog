@@ -1,31 +1,43 @@
 import React, { useState } from "react";
 import fetchApi from "./api";
 
+/**
+ * @param handleMovies Handle movies state of App component
+ */
+
 function SearchBox({ handleMovies }) {
   const [searchField, setSearchField] = useState(); //hook to handle the SearchBox
 
-  //Setup for the input timer
+  //Setup for startCountDown function
   let typingTimer; //timer identifier
   const typingDelay = 5000; //time in ms
+
+  //After typingDelay search movies on API
+  const startCountDown = () => {
+    clearTimeout(typingTimer);
+    typingTimer = setTimeout(() => {
+      if (searchField) searchMovies();
+    }, typingDelay);
+  };
 
   const searchMovies = () => {
     fetchApi.getMovies(searchField).then((movies) => {
       if (!movies) return;
 
       //keep necesary data
-      movies.forEach((movie) => {
-        delete movie.popularity;
-        delete movie.vote_count;
-        delete movie.video;
-        delete movie.adult;
-        delete movie.backdrop_path;
-        delete movie.original_language;
-        delete movie.original_title;
-        delete movie.overview;
+      const newMovies = movies.map((movie) => {
+        return {
+          id: movie.id,
+          title: movie.title,
+          poster_path: movie.poster_path,
+          genre_ids: movie.genre_ids,
+          vote_average: movie.vote_average,
+          release_date: movie.release_date,
+        };
       });
 
       //Save movies in state
-      handleMovies(movies);
+      handleMovies(newMovies);
     });
   };
 
@@ -38,10 +50,7 @@ function SearchBox({ handleMovies }) {
           setSearchField(e.target.value);
         }}
         onKeyUp={() => {
-          clearTimeout(typingTimer);
-          typingTimer = setTimeout(() => {
-            if (searchField) searchMovies();
-          }, typingDelay);
+          startCountDown();
         }}
         onKeyDown={() => clearTimeout(typingTimer)}
       />

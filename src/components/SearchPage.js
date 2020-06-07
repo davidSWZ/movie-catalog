@@ -1,11 +1,15 @@
 import React from "react";
 
-//Import components
 import SearchBox from "./SearchBox";
 import Scroll from "./Scroll";
 import CardList from "./CardList";
 
-//Landing page of the app
+/**
+ * Landing page
+ * @param handleMovies Handle movies state of App component
+ * @param movies result of API search
+ */
+
 function SearchPage({ movies, handleMovies }) {
   return (
     <div className="container">

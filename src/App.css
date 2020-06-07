@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@100;300;900&display=swap");
-.details-info, .no-image-text, a .title {
+.details-info, .no-image-text, .movie-title {
   color: white;
   font-weight: 700;
   text-decoration: none;
@@ -40,7 +40,7 @@ body {
   justify-content: center;
 }
 
-a .title {
+.movie-title {
   position: absolute;
   overflow-wrap: break-word;
   width: 100%;

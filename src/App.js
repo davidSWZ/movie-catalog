@@ -6,6 +6,11 @@ import "./App.css";
 import SearchPage from "./components/SearchPage";
 import DetailsPage from "./components/DetailsPage";
 
+/**
+ * @param handleMovies Handle movies state of App component
+ * @param movies result of movies search
+ * @param genres result of all genres listed on API
+ */
 class App extends Component {
   constructor(props) {
     super(props);
@@ -26,9 +31,9 @@ class App extends Component {
     );
   }
 
-  //Handle the changes on the movies state
-  handleMovies = (newMovieList) => {
-    this.setState({ movies: newMovieList });
+  //Handle movies state
+  handleMovies = (movies) => {
+    this.setState({ movies: movies });
   };
 
   render() {

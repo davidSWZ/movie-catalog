@@ -1,13 +1,11 @@
 import React from "react";
 
-//Return the poster image of a movie
+/**
+ * Return the poster image of movie
+ */
 function Poster(movie) {
-  //Variable that will contain the URL of the image
-  let posterURL = "";
-  console.log(movie);
-  //If the poster exist use the poster, else use a generic image
   if (movie.movie.poster_path != null) {
-    posterURL = "http://image.tmdb.org/t/p/w185" + movie.movie.poster_path;
+    let posterURL = "http://image.tmdb.org/t/p/w185" + movie.movie.poster_path;
     return <img src={posterURL} alt="movie poster" />;
   } else {
     return (

@@ -47,7 +47,7 @@ body {
   justify-content: center;
 }
 
-a .title {
+.movie-title {
   @extend %primary-text;
   position: absolute;
   overflow-wrap: break-word;

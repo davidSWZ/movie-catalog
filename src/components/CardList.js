@@ -1,7 +1,7 @@
 import React from "react";
 import Card from "./Card";
 
-//Component that will loop on the movies list to display each element
+//display list of movies
 function CardList({ movies }) {
   return (
     <div className="cardlist">
