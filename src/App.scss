@@ -3,8 +3,7 @@
 $font-stack: "Lato", sans-serif;
 $background-color: #194a79;
 $primary-text-color: white;
-$secondary-text-color: #7585a3;
-$btn-color: #256eb3;
+$primary-color: #256eb3;
 $shadow-color: 5px 5px 5px rgb(39, 42, 63);
 
 %primary-text {
@@ -58,24 +57,48 @@ a .title {
   background: rgba($color: #000000, $alpha: 0.7);
 }
 
-img {
-  max-width: 40%;
-  min-width: 20%;
-}
-
 .card {
   box-shadow: $shadow-color;
   position: relative;
   margin: 20px 10px 50px 10px;
   height: 15em;
   width: 10em;
+  display: flex;
+  justify-content: center;
+  background: $primary-color;
+
   img {
     position: absolute;
     left: 0;
     width: 100%;
     height: 100%;
     max-width: 100%;
+    background: $primary-color;
+    display: flex;
+    justify-content: center;
   }
+
+  .img-not-found {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: $shadow-color;
+    width: 100px;
+    height: 100px;
+    border: 2px solid $primary-text-color;
+    border-radius: 50px;
+  }
+}
+
+.detail-card {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.no-image-text {
+  @extend %primary-text;
+  position: absolute;
 }
 
 input {
@@ -91,7 +114,7 @@ input {
 button {
   width: 100px;
   height: 60px;
-  background: $btn-color;
+  background: $primary-color;
   border: none;
   border-radius: 50px;
   margin-bottom: 0;

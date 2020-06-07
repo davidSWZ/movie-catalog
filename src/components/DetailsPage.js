@@ -29,7 +29,9 @@ function DetailsPage({ movies }) {
   return (
     <div className="container">
       <h1 className="page-name">{selectedMovie.title}</h1>
-      <Poster movie={selectedMovie} />
+      <div className="card detail-card">
+        <Poster movie={selectedMovie} />
+      </div>
       <p>
         Release date:
         <span className="details-info"> {selectedMovie.date} </span>

@@ -8,11 +8,14 @@ function Poster(movie) {
   //If the poster exist use the poster, else use a generic image
   if (movie.movie.poster != null) {
     posterURL = "http://image.tmdb.org/t/p/w185" + movie.movie.poster;
+    return <img src={posterURL} alt="movie poster" />;
   } else {
-    posterURL =
-      "https://fr.zenit.org/wp-content/uploads/2018/05/no-image-icon-1536x1536.png";
+    return (
+      <div className="img-not-found">
+        <p className="no-image-text"> No Image available</p>
+      </div>
+    );
   }
-  return <img src={posterURL} alt="movie poster" />;
 }
 
 export default Poster;
