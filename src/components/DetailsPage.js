@@ -38,7 +38,18 @@ function DetailsPage({ movies }) {
         Rating: <span className="details-info"> {selectedMovie.rating} </span>{" "}
       </p>
       <p>
-        Genre: <span className="details-info"> {selectedMovie.genre} </span>{" "}
+        Genre:
+        {selectedMovie.genre.map((genre) => {
+          return (
+            <span
+              className="details-info"
+              key={selectedMovie.genre.indexOf(genre)}
+            >
+              {" "}
+              {genre} |
+            </span>
+          );
+        })}
       </p>
 
       <Link to="/">

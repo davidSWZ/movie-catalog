@@ -40,13 +40,6 @@ body {
   justify-content: center;
 }
 
-.card {
-  position: relative;
-  margin: 20px 10px 50px 10px;
-  height: 15em;
-  width: 10em;
-}
-
 a .title {
   position: absolute;
   overflow-wrap: break-word;
@@ -57,11 +50,17 @@ a .title {
 }
 
 img {
-  box-shadow: 5px 5px 5px #272a3f;
   max-width: 40%;
   min-width: 20%;
 }
 
+.card {
+  box-shadow: 5px 5px 5px #272a3f;
+  position: relative;
+  margin: 20px 10px 50px 10px;
+  height: 15em;
+  width: 10em;
+}
 .card img {
   position: absolute;
   left: 0;

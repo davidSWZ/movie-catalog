@@ -48,13 +48,6 @@ body {
   justify-content: center;
 }
 
-.card {
-  position: relative;
-  margin: 20px 10px 50px 10px;
-  height: 15em;
-  width: 10em;
-}
-
 a .title {
   @extend %primary-text;
   position: absolute;
@@ -66,12 +59,16 @@ a .title {
 }
 
 img {
-  box-shadow: $shadow-color;
   max-width: 40%;
   min-width: 20%;
 }
 
 .card {
+  box-shadow: $shadow-color;
+  position: relative;
+  margin: 20px 10px 50px 10px;
+  height: 15em;
+  width: 10em;
   img {
     position: absolute;
     left: 0;
