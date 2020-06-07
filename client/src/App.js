@@ -6,24 +6,24 @@ import "./App.css";
 import SearchPage from "./components/SearchPage";
 import DetailsPage from "./components/DetailsPage";
 
-/**
- * @param handleMovies Handle movies state of App component
- * @param movies result of movies search
- * @param genres result of all genres listed on API
- */
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      movies: [],
-      genres: [],
+      movies: [], //result of movies search
+      genres: [], // list of genres
     };
   }
 
+  //get all genres listed on API once
   componentDidMount() {
     fetchApi.getGenres().then(
       (genres) => {
-        this.setState({ genres: genres });
+        let genresList = {}
+        genres.forEach(genre => {
+          genresList[genre.id] = genre.name
+        })
+        this.setState({ genres: genresList });
       },
       (error) => {
         console.log(error);
@@ -31,7 +31,7 @@ class App extends Component {
     );
   }
 
-  //Handle movies state
+  // set movies state with API search
   handleMovies = (movies) => {
     this.setState({ movies: movies });
   };
@@ -40,17 +40,19 @@ class App extends Component {
     const { movies, genres } = this.state;
 
     return (
-      <Router>
-        <Switch>
-          <Route exact path="/">
-            <SearchPage movies={movies} handleMovies={this.handleMovies} />
-          </Route>
+      <div className="container">
+        <Router>
+          <Switch>
+            <Route exact path="/">
+              <SearchPage movies={movies} handleMovies={this.handleMovies} />
+            </Route>
 
-          <Route path="/:movieTitle/:id">
-            <DetailsPage movies={movies} genres={genres} />
-          </Route>
-        </Switch>
-      </Router>
+            <Route path="/:movieTitle/:id">
+              <DetailsPage movies={movies} genres={genres} />
+            </Route>
+          </Switch>
+        </Router>
+      </div>
     );
   }
 }

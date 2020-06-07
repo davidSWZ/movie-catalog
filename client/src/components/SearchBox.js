@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import fetchApi from "./api";
 
 /**
- * @param handleMovies Handle movies state of App component
+ * @param handleMovies set movies state with API search
  */
 
 function SearchBox({ handleMovies }) {
@@ -24,7 +24,7 @@ function SearchBox({ handleMovies }) {
     fetchApi.getMovies(searchField).then((movies) => {
       if (!movies) return;
 
-      //keep necesary data
+      //keep necessary data
       const newMovies = movies.map((movie) => {
         return {
           id: movie.id,

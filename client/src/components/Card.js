@@ -4,11 +4,9 @@ import { BrowserRouter as Redirect, Link } from "react-router-dom";
 
 import Poster from "./Poster";
 
-/**
- * Link send to detailsPage
- */
 function Card({ movie }) {
   return (
+    //Link send to detailsPage
     <Link to={"/" + movie.title + "/" + movie.id}>
       <div className="card">
         <Poster movie={movie} />
