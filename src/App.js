@@ -42,7 +42,7 @@ class App extends Component {
           </Route>
 
           <Route path="/:movieTitle/:id">
-            <DetailsPage movies={(movies, genres)} />
+            <DetailsPage movies={movies} genres={genres} />
           </Route>
         </Switch>
       </Router>

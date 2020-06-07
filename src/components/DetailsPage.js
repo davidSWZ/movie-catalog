@@ -5,7 +5,7 @@ import { BrowserRouter as Redirect, Link, useParams } from "react-router-dom";
 import Poster from "./Poster";
 
 //Return a page with the details of a selected movie
-function DetailsPage({ movies }) {
+function DetailsPage({ movies, genres }) {
   let { id } = useParams();
 
   //Prevent someone to accidentally go to the DetailsPage and have an error
@@ -21,11 +21,11 @@ function DetailsPage({ movies }) {
       </div>
     );
 
-  //Select the good movie in regard to the params
   const selectedMovie = movies.find(
     (movie) => movie.id.toString() === id.toString()
   );
-
+  console.log(selectedMovie.genre_ids);
+  console.log(genres.genres);
   return (
     <div className="container">
       <h1 className="page-name">{selectedMovie.title}</h1>
@@ -40,15 +40,16 @@ function DetailsPage({ movies }) {
         Rating: <span className="details-info"> {selectedMovie.rating} </span>{" "}
       </p>
       <p>
-        Genre:
-        {selectedMovie.genre.map((genre) => {
+        Genre:{" "}
+        {selectedMovie.genre_ids.map((genre_id) => {
           return (
-            <span
-              className="details-info"
-              key={selectedMovie.genre.indexOf(genre)}
-            >
-              {" "}
-              {genre} |
+            <span className="details-info" key={genre_id}>
+              {
+                genres.genres.find(
+                  (genre) => genre.id.toString() === genre_id.toString()
+                ).name
+              }{" "}
+              |{" "}
             </span>
           );
         })}
