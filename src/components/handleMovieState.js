@@ -1,5 +1,4 @@
 import fetchApi from "./api";
-import GenreVSGenreId from "./GenreVSGenreId";
 
 //Take the response from the API and for each movie, keep only :
 //title, poster, ratings, genre and release date
