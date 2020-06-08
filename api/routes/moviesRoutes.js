@@ -3,7 +3,7 @@ var router = express.Router()
 var movie = require('../models/movieModel')
 
 /**
- * Return movies matching query from DB
+ * Get 10 first movies matching query from DB
  */
 router.get('/', function (req, res) {
   const search = req.query.search
@@ -18,6 +18,20 @@ router.get('/', function (req, res) {
           res.send(movies)
         }
       })
+})
+
+/**
+ * Get one movie from the DB
+ */
+router.get('/:id', function (req, res) {
+  const id = req.params.id
+  movie.find({ _id: id }, function (err, movie) {
+    if (err) {
+      console.log(err)
+    } else {
+      res.send(movie)
+    }
+  })
 })
 
 /**

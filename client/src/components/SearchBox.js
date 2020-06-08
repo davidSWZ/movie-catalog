@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import fetchApi from "./api";
+import fetchAPI from "./api";
 
 /**
  * @param handleMovies set movies state with API search
@@ -21,7 +21,7 @@ function SearchBox({ handleMovies }) {
   };
 
   const searchMovies = () => {
-    fetchApi.getMovies(searchField).then((movies) => {
+    fetchAPI("http://localhost:8000/api/movies?search=", searchField).then((movies) => {
       if (!movies) return;
 
       //keep necessary data

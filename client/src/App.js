@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import fetchApi from "./components/api";
+import fetchAPI from "./components/api";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 
@@ -17,11 +17,13 @@ class App extends Component {
 
   //get all genres listed on API once
   componentDidMount() {
-    fetchApi.getGenres().then(
+    fetchAPI("localhost:8000/api/genres").then(
       (genres) => {
         let genresList = {}
+
+        //make associated array from genres array
         genres.forEach(genre => {
-          genresList[genre.id] = genre.name
+          genresList[genre.id] = genre.name 
         })
         this.setState({ genres: genresList });
       },
@@ -47,9 +49,10 @@ class App extends Component {
               <SearchPage movies={movies} handleMovies={this.handleMovies} />
             </Route>
 
-            <Route path="/:movieTitle/:id">
-              <DetailsPage movies={movies} genres={genres} />
-            </Route>
+            <Route path="/:movieTitle/:id" 
+              render={(props) => <DetailsPage genres={genres} id={props.match.params.id} />} 
+            />
+
           </Switch>
         </Router>
       </div>
