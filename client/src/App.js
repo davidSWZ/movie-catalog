@@ -29,7 +29,7 @@ class App extends Component {
         console.log(error);
       }
     );
-  }
+  };
 
   // set movies state with API search
   handleMovies = (movies) => {

@@ -4,14 +4,11 @@
 const getMovies = async (searchField) => {
   //Compose URL request
   const moviesRequest =
-    "https://api.themoviedb.org/3/search/movie?api_key=" +
-    process.env.REACT_APP_API_KEY +
-    "&query=" +
+    "http://localhost:8000/api/movies?search=" +
     searchField;
-
   let fetchedData = await fetch(moviesRequest); //Make the request
   let response = await fetchedData.json(); //Parse the result from the API
-  return response.results;
+  return response;
 };
 
 const getGenres = async () => {
@@ -26,3 +23,20 @@ const getGenres = async () => {
 };
 
 export default { getMovies, getGenres };
+
+/**
+ * Request to the TMDB API
+ * Used at the beginning of the project
+ */
+// const getMovies = async (searchField) => {
+//   //Compose URL request
+//   const moviesRequest =
+//     "https://api.themoviedb.org/3/search/movie?api_key=" +
+//     process.env.REACT_APP_API_KEY +
+//     "&query=" +
+//     searchField;
+
+//   let fetchedData = await fetch(moviesRequest); //Make the request
+//   let response = await fetchedData.json(); //Parse the result from the API
+//   return response.results;
+// };

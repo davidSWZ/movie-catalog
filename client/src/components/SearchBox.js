@@ -27,12 +27,9 @@ function SearchBox({ handleMovies }) {
       //keep necessary data
       const newMovies = movies.map((movie) => {
         return {
-          id: movie.id,
+          id: movie._id,
           title: movie.title,
-          poster_path: movie.poster_path,
-          genre_ids: movie.genre_ids,
-          vote_average: movie.vote_average,
-          release_date: movie.release_date,
+          poster_path: movie.poster_path
         };
       });
 
