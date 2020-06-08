@@ -6,15 +6,30 @@ var genre = require('../models/genreModel')
  * Return all genres from DB
  */
 router.get('/', function (req, res) {
-  // genres.find({}, function(err, genres){
-  //    if(err){
-  //        console.log(err);
-  //    } else{
-  //        res.send("search genres")
-  //    }
-  // });
+  genre.find({}, function (err, genres) {
+    if (err) {
+      console.log(err)
+    } else {
+      res.send(genres)
+    }
+  })
+})
 
-  res.send('search genres')
+/**
+ * Add new genre to DB
+ */
+router.post('/', function (req, res) {
+  const newGenre = {
+    name: req.body.name
+  }
+  genre.create(newGenre, function (err, genre) {
+    if (err) {
+      console.log(err)
+    } else {
+      console.log(genre)
+      res.send('genre successfully added')
+    }
+  })
 })
 
 module.exports = router
