@@ -104,7 +104,7 @@ body {
 input {
   padding: 17px 20px;
   width: 50%;
-  margin-right: 10px;
+  margin-right: 20px;
   border: 0;
   border-radius: 50px;
   font-size: 20px;
@@ -121,6 +121,16 @@ button {
   color: $primary-text-color;
   box-shadow: $shadow-color;
   font-weight: 700;
+}
+
+.delete-btn {
+  background-color: rgb(173, 44, 27);
+  margin-left: 50px;
+}
+
+.green-btn {
+  background-color: rgb(27, 173, 76);
+  margin-left: 50px;
 }
 
 .details-info {

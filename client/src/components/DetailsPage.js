@@ -10,27 +10,29 @@ class DetailsPage extends Component {
     super(props);
     this.state = {
       movie: {}, //result of one movie search
-      genreNames: []
+      genreNames: [], //genre names of one movie
+      redirection: false, //used to redirect after movie deleted
+      error : false //used if error during movie delete
     };
   }
 
+  //get movie info from API and store it in state
   componentDidMount() {
-    
-    //get movie info from API and store it in state
-    fetchAPI("http://localhost:8000/api/movies/", this.props.id)
+    fetchAPI("http://localhost:8000/api/movies/", "get", this.props.id)
     .then(selectedMovie => {
       this.setState({ movie: selectedMovie[0] });
-      console.log(this.state.movie)
       this.getGenreNames();
       }
     );
   }
   
+  //get genre names for one movie
   getGenreNames = () => {
-    const genreNames =  this.props.genres.filter(genre => genre._id == this.state.movie.genre_ids);
+    const genreNames =  this.props.genres.filter(genre => genre._id === this.state.movie.genre_ids);
     this.setState({ genreNames: genreNames })
   };
 
+  //display all movie genres
   displayGenreNames = () => {
     return this.state.genreNames.map((genreName) => {
       return (
@@ -42,23 +44,38 @@ class DetailsPage extends Component {
     });
   };
 
+  //Delete movie in DB
+  //then display redirect button
+  //then delete movie from state
+  handleDeleteData = () => {
+    fetchAPI("http://localhost:8000/api/movies/", "delete", this.state.movie._id )
+    .then(res => {
+      if(res.success) {
+        this.setState({ redirection: true })
+        this.props.handleDeletedMovie(this.state.movie._id)
+      } else {
+        this.setState({ error: true })
+      }
+    })
+  }
+
   //if not comming from searchPage, render button redirecting to searchPage
   //@todo discuss if need to access to the page directly from the URL. SEO ?
   render() {
-    const { movie } = this.state;
-    if (movie === null) {
+    const { movie, redirection, error } = this.state;
+    if (movie === undefined || redirection) {
       return (
-        <div>
+          <div>
           <h1 className="page-name">
-            Please come back to the landing page and search movies again
+            Movie deleted! Please come back to the landing page
           </h1>
           <Link to="/">
             <button>Back to search</button>
           </Link>
         </div>
-      );
-      // else return detailsPage
-    }
+         )
+    } 
+    // else return detailsPage
     return (
       <div>
         <h1 className="page-name">{movie.title}</h1>
@@ -78,6 +95,21 @@ class DetailsPage extends Component {
         <Link to="/">
           <button>Back to search</button>
         </Link>
+
+        <button 
+        className="green-btn"
+        onClick={() => null } > 
+          Modify 
+        </button>
+
+        <button 
+        className="delete-btn"
+        onClick={() => this.handleDeleteData() } > 
+          Delete 
+        </button>
+        
+        { error ? <p>An error occured</p> : null }
+
       </div>
     );
   }

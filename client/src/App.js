@@ -18,7 +18,7 @@ class App extends Component {
 
   //get all genres listed on API once
   componentDidMount() {
-    fetchAPI("http://localhost:8000/api/genres", "").then(
+    fetchAPI("http://localhost:8000/api/genres", "get", "").then(
       (genres) => {
         this.setState({ genres: genres });
       },
@@ -33,9 +33,14 @@ class App extends Component {
     this.setState({ movies: movies });
   };
 
+  //Remove deleted movie from movie state
+  handleDeletedMovie = (deletedMovieId) => {
+    const movies = this.state.movies.filter(movie => movie.id != deletedMovieId);
+    this.setState({ movies: movies });
+  }
+
   render() {
     const { movies, genres } = this.state;
-
     return (
       <div className="container">
         <Router>
@@ -45,7 +50,12 @@ class App extends Component {
             </Route>
 
             <Route path="/:movieTitle/:id" 
-              render={(props) => <DetailsPage genres={genres} id={props.match.params.id} />} 
+              render={(props) => 
+              <DetailsPage 
+                genres={genres} 
+                id={props.match.params.id} 
+                handleDeletedMovie= {this.handleDeletedMovie} 
+              />} 
             />
 
             <Route path="/add" 

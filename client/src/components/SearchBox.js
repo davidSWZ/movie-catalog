@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+// Todo Redirect not used but Link doesn't work if deleted ??
+import { BrowserRouter as Redirect, Link } from "react-router-dom";
+
 import fetchAPI from "./api";
 
 /**
@@ -21,7 +24,8 @@ function SearchBox({ handleMovies }) {
   };
 
   const searchMovies = () => {
-    fetchAPI("http://localhost:8000/api/movies?search=", searchField).then((movies) => {
+    fetchAPI("http://localhost:8000/api/movies?search=", "get", searchField)
+    .then((movies) => {
       if (!movies) return;
 
       //keep necessary data
@@ -58,6 +62,11 @@ function SearchBox({ handleMovies }) {
       >
         OK
       </button>
+
+      <Link to="/add">
+        <button className="green-btn">Add movie</button>
+      </Link>
+
     </div>
   );
 }

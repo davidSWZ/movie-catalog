@@ -13,7 +13,7 @@ router.get('/', function (req, res) {
     .exec(
       function (err, movies) {
         if (err) {
-          console.log(err)
+          res.send(err)
         } else {
           res.send(movies)
         }
@@ -27,7 +27,7 @@ router.get('/:id', function (req, res) {
   const id = req.params.id
   movie.find({ _id: id }, function (err, movie) {
     if (err) {
-      console.log(err)
+      res.send(err)
     } else {
       res.send(movie)
     }
@@ -47,7 +47,7 @@ router.post('/', function (req, res) {
   }
   movie.create(newMovie, function (err, movie) {
     if (err) {
-      console.log(err)
+      res.send(err)
     } else {
       console.log(movie)
       res.send('movie successfully added')
@@ -62,9 +62,13 @@ router.delete('/:id', function (req, res) {
   const id = req.params.id
   movie.deleteOne({ _id: id }, function (err) {
     if (!err) {
-      res.send('Movie deleted successfully')
+      res.send({
+        success: true
+      })
     } else {
-      console.log(err)
+      res.send({
+        success: false
+      })
     }
   })
 })

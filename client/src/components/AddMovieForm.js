@@ -21,7 +21,7 @@ function SearchBox({ handleMovies }) {
   };
 
   const searchMovies = () => {
-    fetchAPI("http://localhost:8000/api/movies?search=", searchField).then((movies) => {
+    fetchAPI.getData("http://localhost:8000/api/movies?search=", searchField).then((movies) => {
       if (!movies) return;
 
       //keep necessary data
