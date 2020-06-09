@@ -10,24 +10,31 @@ class DetailsPage extends Component {
     super(props);
     this.state = {
       movie: {}, //result of one movie search
+      genreNames: []
     };
   }
 
-  //get movie info from API and store it in state
   componentDidMount() {
+    
+    //get movie info from API and store it in state
     fetchAPI("http://localhost:8000/api/movies/", this.props.id)
     .then(selectedMovie => {
-      this.setState({ movie: selectedMovie[0] })
-        console.log(this.state)
+      this.setState({ movie: selectedMovie[0] });
+      this.getGenreNames();
       }
     );
   }
-
+  
   getGenreNames = () => {
-    return this.state.movie.genre_ids.map((genre_id) => {
+    const genreNames =  this.props.genres.filter(genre => genre._id == this.state.movie.genre_ids);
+    this.setState({ genreNames: genreNames })
+  };
+
+  displayGenreNames = () => {
+    return this.state.genreNames.map((genreName) => {
       return (
-        <span className="details-info" key={genre_id}>
-          { this.prop.genres[genre_id] }
+        <span className="details-info" key={genreName._id}>
+          { genreName.name }
           <span> | </span>
         </span>
       );
@@ -65,7 +72,7 @@ class DetailsPage extends Component {
           Rating:
           <span className="details-info"> {movie.vote_average} </span>{" "}
         </p>
-        {/* <p>Genre: {this.getGenreNames()}</p> */}
+        <p>Genre: {this.displayGenreNames()}</p>
   
         <Link to="/">
           <button>Back to search</button>

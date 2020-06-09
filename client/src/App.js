@@ -17,15 +17,9 @@ class App extends Component {
 
   //get all genres listed on API once
   componentDidMount() {
-    fetchAPI("localhost:8000/api/genres").then(
+    fetchAPI("http://localhost:8000/api/genres", "").then(
       (genres) => {
-        let genresList = {}
-
-        //make associated array from genres array
-        genres.forEach(genre => {
-          genresList[genre.id] = genre.name 
-        })
-        this.setState({ genres: genresList });
+        this.setState({ genres: genres });
       },
       (error) => {
         console.log(error);

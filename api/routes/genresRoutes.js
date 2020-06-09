@@ -19,6 +19,7 @@ router.get('/', function (req, res) {
  * Add new genre to DB
  */
 router.post('/', function (req, res) {
+  console.log(req.body)
   const newGenre = {
     name: req.body.name
   }
