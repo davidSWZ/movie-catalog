@@ -55,4 +55,18 @@ router.post('/', function (req, res) {
   })
 })
 
+/**
+ * Delete one movie
+ */
+router.delete('/:id', function (req, res) {
+  const id = req.params.id
+  movie.deleteOne({ _id: id }, function (err) {
+    if (!err) {
+      res.send('Movie deleted successfully')
+    } else {
+      console.log(err)
+    }
+  })
+})
+
 module.exports = router

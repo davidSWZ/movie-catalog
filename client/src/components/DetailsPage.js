@@ -20,6 +20,7 @@ class DetailsPage extends Component {
     fetchAPI("http://localhost:8000/api/movies/", this.props.id)
     .then(selectedMovie => {
       this.setState({ movie: selectedMovie[0] });
+      console.log(this.state.movie)
       this.getGenreNames();
       }
     );
