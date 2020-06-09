@@ -1,5 +1,5 @@
 import React from "react";
-// ¿¿ Redirect not used but Link doesn't work if deleted ??
+// Todo Redirect not used but Link doesn't work if deleted ??
 import { BrowserRouter as Redirect, Link } from "react-router-dom";
 
 import Poster from "./Poster";

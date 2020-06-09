@@ -5,11 +5,12 @@ import "./App.css";
 
 import SearchPage from "./components/SearchPage";
 import DetailsPage from "./components/DetailsPage";
+import AddMovieForm from "./components/AddMovieForm";
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
+    this.state = { 
       movies: [], //result of movies search
       genres: [], // list of genres
     };
@@ -45,6 +46,10 @@ class App extends Component {
 
             <Route path="/:movieTitle/:id" 
               render={(props) => <DetailsPage genres={genres} id={props.match.params.id} />} 
+            />
+
+            <Route path="/add" 
+              render={(props) => <AddMovieForm />} 
             />
 
           </Switch>
