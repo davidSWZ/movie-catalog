@@ -16,7 +16,7 @@ class MovieForm extends Component {
       movie: {
         title: "",
         poster_path: "",
-        genre_ids: [1],
+        genres: [],
         release_date: "",
         vote_average: "",
       },
@@ -36,12 +36,11 @@ class MovieForm extends Component {
           movie: {
             title: selectedMovie[0].title,
             poster_path: selectedMovie[0].poster_path,
-            genre_ids: selectedMovie[0].genre_ids,
+            genres: selectedMovie[0].genres,
             release_date: selectedMovie[0].release_date,
             vote_average: selectedMovie[0].vote_average,
           },
         });
-        console.log(this.state.movie);
       });
   }
 
@@ -49,6 +48,30 @@ class MovieForm extends Component {
     this.setState({
       movie: { ...this.state.movie, [e.target.name]: e.target.value },
     });
+  };
+
+  handleGenreCheckboxChange = (checkBoxGenre, isChecked) => {
+    console.log("handleGenreCheckboxChange " + isChecked);
+
+    if (isChecked) {
+      // on vient de le decocher
+      this.setState((prevState) => ({
+        movie: {
+          ...prevState.movie,
+          genres: prevState.movie.genres.filter(
+            (genre) => checkBoxGenre != genre
+          ),
+        },
+      }));
+    } else {
+      // On vient de le cocher
+      this.setState((prevState) => ({
+        movie: {
+          ...prevState.movie,
+          genres: [...prevState.movie.genres, checkBoxGenre],
+        },
+      }));
+    }
   };
 
   saveNewMovie = (e) => {
@@ -64,7 +87,7 @@ class MovieForm extends Component {
     if (
       this.state.movie.title !== "" &&
       this.state.movie.poster_path !== "" &&
-      this.state.movie.genre_ids.length !== 0 &&
+      this.state.movie.genres.length !== 0 &&
       this.state.movie.release_date !== "" &&
       this.state.movie.vote_average !== ""
     )
@@ -165,7 +188,8 @@ class MovieForm extends Component {
           <div>
             <GenreCheckBoxes
               genres={this.props.genres}
-              handleGenresInput={this.handleGenresInput}
+              handleGenreCheckboxChange={this.handleGenreCheckboxChange}
+              movieGenres={this.state.movie.genres}
             />
           </div>
           <div>

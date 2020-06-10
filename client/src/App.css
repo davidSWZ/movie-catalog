@@ -160,12 +160,20 @@ button {
   margin-left: 50px;
 }
 
-.add-movie-btn {
+s .add-movie-btn {
   background: linear-gradient(45deg, #11a4d4 0%, #11a4d4 38%, #10c859 100%);
 }
 
 .details-info {
   font-size: 20px;
+  padding: 0 8px 0 8px;
+}
+
+.genre {
+  border-right: 1px solid white;
+}
+.genre:last-child {
+  border: none;
 }
 
 /*# sourceMappingURL=App.css.map */

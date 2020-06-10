@@ -5,7 +5,7 @@ import "./App.css";
 
 import SearchPage from "./components/SearchPage";
 import DetailsPage from "./components/DetailsPage";
-import AddMovieForm from "./components/MovieForm";
+import MovieForm from "./components/MovieForm";
 
 class App extends Component {
   constructor(props) {
@@ -36,7 +36,7 @@ class App extends Component {
   //Remove deleted movie from movie state
   handleDeletedMovie = (deletedMovieId) => {
     const movies = this.state.movies.filter(
-      (movie) => movie.id != deletedMovieId
+      (movie) => movie.id !== deletedMovieId
     );
     this.setState({ movies: movies });
   };
@@ -65,7 +65,7 @@ class App extends Component {
             <Route
               path="/:id"
               render={(props) => (
-                <AddMovieForm genres={genres} id={props.match.params.id} />
+                <MovieForm genres={genres} id={props.match.params.id} />
               )}
             />
           </Switch>

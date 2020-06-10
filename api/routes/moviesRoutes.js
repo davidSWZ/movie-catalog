@@ -1,91 +1,91 @@
-var express = require("express");
-var router = express.Router();
-var movie = require("../models/movieModel");
+var express = require('express')
+var router = express.Router()
+var movie = require('../models/movieModel')
 
 /**
  * Get 10 first movies matching query from DB
  */
-router.get("/", function (req, res) {
-  const search = req.query.search;
+router.get('/', function (req, res) {
+  const search = req.query.search
   movie
-    .find({ title: new RegExp(search, "i") })
+    .find({ title: new RegExp(search, 'i') })
     .limit(10)
     .sort({ title: 1 })
     .exec(function (err, movies) {
       if (err) {
-        res.send(err);
+        res.send(err)
       } else {
-        res.send(movies);
+        res.send(movies)
       }
-    });
-});
+    })
+})
 
 /**
  * Get one movie from the DB
  */
-router.get("/:id", function (req, res) {
-  const id = req.params.id;
+router.get('/:id', function (req, res) {
+  const id = req.params.id
   movie.find({ _id: id }, function (err, movie) {
     if (err) {
-      res.send(err);
+      res.send(err)
     } else {
-      res.send(movie);
+      res.send(movie)
     }
-  });
-});
+  })
+})
 
 /**
  * Update movie
  */
-router.put("/:id", function (req, res) {
-  const id = req.params.id;
+router.put('/:id', function (req, res) {
+  const id = req.params.id
   movie.findOneAndUpdate({ _id: id }, req.body, function (err, foundMovie) {
     if (err) {
-      res.send({ success: false });
+      res.send({ success: false })
     } else {
-      res.send({ success: true });
+      res.send({ success: true })
     }
-  });
-});
+  })
+})
 
 /**
  * Add new movie to DB
  */
-router.post("/", function (req, res) {
+router.post('/', function (req, res) {
   const newMovie = {
     title: req.body.title,
     poster_path: req.body.poster_path,
-    genre_ids: req.body.genre_ids,
+    genres: req.body.genres,
     vote_average: req.body.vote_average,
-    release_date: req.body.release_date,
-  };
+    release_date: req.body.release_date
+  }
   movie.create(newMovie, function (err, movie) {
     if (err) {
-      res.send(err);
+      res.send(err)
     } else {
       res.send({
-        success: true,
-      });
+        success: true
+      })
     }
-  });
-});
+  })
+})
 
 /**
  * Delete one movie
  */
-router.delete("/:id", function (req, res) {
-  const id = req.params.id;
+router.delete('/:id', function (req, res) {
+  const id = req.params.id
   movie.deleteOne({ _id: id }, function (err) {
     if (!err) {
       res.send({
-        success: true,
-      });
+        success: true
+      })
     } else {
       res.send({
-        success: false,
-      });
+        success: false
+      })
     }
-  });
-});
+  })
+})
 
-module.exports = router;
+module.exports = router

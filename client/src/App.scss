@@ -177,8 +177,7 @@ button {
   background-color: rgb(27, 173, 76);
   margin-left: 50px;
 }
-
-.add-movie-btn {
+s .add-movie-btn {
   background: linear-gradient(
     45deg,
     rgba(17, 164, 212, 1) 0%,
@@ -190,4 +189,12 @@ button {
 .details-info {
   @extend %primary-text;
   font-size: 20px;
+  padding: 0 8px 0 8px;
+}
+
+.genre {
+  border-right: 1px solid white;
+  &:last-child {
+    border: none;
+  }
 }

@@ -9,8 +9,13 @@ class DetailsPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      movie: {}, //result of one movie search
-      genreNames: [], //genre names of one movie
+      movie: {
+        title: "",
+        poster_path: "",
+        genres: [],
+        release_date: "",
+        vote_average: "",
+      }, //result of one movie search
       redirection: false, //used to redirect after movie deleted
       error: false, //used if error during movie delete
     };
@@ -25,27 +30,13 @@ class DetailsPage extends Component {
           "T"
         )[0];
         this.setState({ movie: selectedMovie[0] });
-        this.getGenreNames();
       });
   }
 
-  //get genre names for one movie
-  getGenreNames = () => {
-    const genreNames = this.props.genres.filter(
-      (genre) => genre._id === this.state.movie.genre_ids
-    );
-    this.setState({ genreNames: genreNames });
-  };
-
   //display all movie genres
-  displayGenreNames = () => {
-    return this.state.genreNames.map((genreName) => {
-      return (
-        <span className="details-info" key={genreName._id}>
-          {genreName.name}
-          <span> | </span>
-        </span>
-      );
+  displayGenre = () => {
+    return this.state.movie.genres.map((genre) => {
+      return <span className="details-info genre">{genre}</span>;
     });
   };
 
@@ -100,10 +91,10 @@ class DetailsPage extends Component {
           Rating:
           <span className="details-info"> {movie.vote_average} </span>{" "}
         </p>
-        <p>Genre: {this.displayGenreNames()}</p>
+        <p>Genre: {this.displayGenre()}</p>
 
         <Link to="/">
-          <button>Back to search</button>
+          <button>Return</button>
         </Link>
 
         <Link to={"/" + movie._id}>
