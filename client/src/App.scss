@@ -111,6 +111,27 @@ input {
   box-shadow: $shadow-color;
 }
 
+.add-form-input {
+  margin-bottom: 20px;
+  margin-top: 5px;
+}
+
+.checkbox-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.checkbox {
+  width: 10px;
+  margin: 0px 20px 20px 40px;
+  -ms-transform: scale(2); /* IE */
+  -moz-transform: scale(2); /* FF */
+  -webkit-transform: scale(2); /* Safari and Chrome */
+  -o-transform: scale(2); /* Opera */
+  transform: scale(2);
+}
+
 button {
   width: 100px;
   height: 60px;
@@ -133,6 +154,16 @@ button {
   margin-left: 50px;
 }
 
+.add-movie-btn {
+  background: linear-gradient(
+    45deg,
+    rgba(17, 164, 212, 1) 0%,
+    rgba(17, 164, 212, 1) 38%,
+    rgba(16, 200, 89, 1) 100%
+  );
+}
+
 .details-info {
   @extend %primary-text;
+  font-size: 20px;
 }

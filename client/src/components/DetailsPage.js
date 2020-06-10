@@ -12,24 +12,26 @@ class DetailsPage extends Component {
       movie: {}, //result of one movie search
       genreNames: [], //genre names of one movie
       redirection: false, //used to redirect after movie deleted
-      error : false //used if error during movie delete
+      error: false, //used if error during movie delete
     };
   }
 
   //get movie info from API and store it in state
   componentDidMount() {
-    fetchAPI("http://localhost:8000/api/movies/", "get", this.props.id)
-    .then(selectedMovie => {
-      this.setState({ movie: selectedMovie[0] });
-      this.getGenreNames();
-      }
-    );
+    fetchAPI
+      .fetchData("http://localhost:8000/api/movies/", "get", this.props.id)
+      .then((selectedMovie) => {
+        this.setState({ movie: selectedMovie[0] });
+        this.getGenreNames();
+      });
   }
-  
+
   //get genre names for one movie
   getGenreNames = () => {
-    const genreNames =  this.props.genres.filter(genre => genre._id === this.state.movie.genre_ids);
-    this.setState({ genreNames: genreNames })
+    const genreNames = this.props.genres.filter(
+      (genre) => genre._id === this.state.movie.genre_ids
+    );
+    this.setState({ genreNames: genreNames });
   };
 
   //display all movie genres
@@ -37,7 +39,7 @@ class DetailsPage extends Component {
     return this.state.genreNames.map((genreName) => {
       return (
         <span className="details-info" key={genreName._id}>
-          { genreName.name }
+          {genreName.name}
           <span> | </span>
         </span>
       );
@@ -48,16 +50,21 @@ class DetailsPage extends Component {
   //then display redirect button
   //then delete movie from state
   handleDeleteData = () => {
-    fetchAPI("http://localhost:8000/api/movies/", "delete", this.state.movie._id )
-    .then(res => {
-      if(res.success) {
-        this.setState({ redirection: true })
-        this.props.handleDeletedMovie(this.state.movie._id)
-      } else {
-        this.setState({ error: true })
-      }
-    })
-  }
+    fetchAPI
+      .fetchData(
+        "http://localhost:8000/api/movies/",
+        "delete",
+        this.state.movie._id
+      )
+      .then((res) => {
+        if (res.success) {
+          this.setState({ redirection: true });
+          this.props.handleDeletedMovie(this.state.movie._id);
+        } else {
+          this.setState({ error: true });
+        }
+      });
+  };
 
   //if not comming from searchPage, render button redirecting to searchPage
   //@todo discuss if need to access to the page directly from the URL. SEO ?
@@ -65,7 +72,7 @@ class DetailsPage extends Component {
     const { movie, redirection, error } = this.state;
     if (movie === undefined || redirection) {
       return (
-          <div>
+        <div>
           <h1 className="page-name">
             Movie deleted! Please come back to the landing page
           </h1>
@@ -73,8 +80,8 @@ class DetailsPage extends Component {
             <button>Back to search</button>
           </Link>
         </div>
-         )
-    } 
+      );
+    }
     // else return detailsPage
     return (
       <div>
@@ -91,25 +98,20 @@ class DetailsPage extends Component {
           <span className="details-info"> {movie.vote_average} </span>{" "}
         </p>
         <p>Genre: {this.displayGenreNames()}</p>
-  
+
         <Link to="/">
           <button>Back to search</button>
         </Link>
 
-        <button 
-        className="green-btn"
-        onClick={() => null } > 
-          Modify 
+        <button className="green-btn" onClick={() => null}>
+          Modify
         </button>
 
-        <button 
-        className="delete-btn"
-        onClick={() => this.handleDeleteData() } > 
-          Delete 
+        <button className="delete-btn" onClick={() => this.handleDeleteData()}>
+          Delete
         </button>
-        
-        { error ? <p>An error occured</p> : null }
 
+        {error ? <p>An error occured</p> : null}
       </div>
     );
   }

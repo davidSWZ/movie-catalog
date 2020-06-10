@@ -24,22 +24,23 @@ function SearchBox({ handleMovies }) {
   };
 
   const searchMovies = () => {
-    fetchAPI("http://localhost:8000/api/movies?search=", "get", searchField)
-    .then((movies) => {
-      if (!movies) return;
+    fetchAPI
+      .fetchData("http://localhost:8000/api/movies?search=", "get", searchField)
+      .then((movies) => {
+        if (!movies) return;
 
-      //keep necessary data
-      const newMovies = movies.map((movie) => {
-        return {
-          id: movie._id,
-          title: movie.title,
-          poster_path: movie.poster_path
-        };
+        //keep necessary data
+        const newMovies = movies.map((movie) => {
+          return {
+            id: movie._id,
+            title: movie.title,
+            poster_path: movie.poster_path,
+          };
+        });
+
+        //Save movies in state
+        handleMovies(newMovies);
       });
-
-      //Save movies in state
-      handleMovies(newMovies);
-    });
   };
 
   return (
@@ -66,7 +67,6 @@ function SearchBox({ handleMovies }) {
       <Link to="/add">
         <button className="green-btn">Add movie</button>
       </Link>
-
     </div>
   );
 }

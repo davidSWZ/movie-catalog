@@ -5,12 +5,12 @@ import "./App.css";
 
 import SearchPage from "./components/SearchPage";
 import DetailsPage from "./components/DetailsPage";
-import AddMovieForm from "./components/AddMovieForm";
+import AddMovieForm from "./components/MovieForm";
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       movies: [], //result of movies search
       genres: [], // list of genres
     };
@@ -18,7 +18,7 @@ class App extends Component {
 
   //get all genres listed on API once
   componentDidMount() {
-    fetchAPI("http://localhost:8000/api/genres", "get", "").then(
+    fetchAPI.fetchData("http://localhost:8000/api/genres", "get", "").then(
       (genres) => {
         this.setState({ genres: genres });
       },
@@ -26,7 +26,7 @@ class App extends Component {
         console.log(error);
       }
     );
-  };
+  }
 
   // set movies state with API search
   handleMovies = (movies) => {
@@ -35,9 +35,11 @@ class App extends Component {
 
   //Remove deleted movie from movie state
   handleDeletedMovie = (deletedMovieId) => {
-    const movies = this.state.movies.filter(movie => movie.id != deletedMovieId);
+    const movies = this.state.movies.filter(
+      (movie) => movie.id != deletedMovieId
+    );
     this.setState({ movies: movies });
-  }
+  };
 
   render() {
     const { movies, genres } = this.state;
@@ -49,19 +51,21 @@ class App extends Component {
               <SearchPage movies={movies} handleMovies={this.handleMovies} />
             </Route>
 
-            <Route path="/:movieTitle/:id" 
-              render={(props) => 
-              <DetailsPage 
-                genres={genres} 
-                id={props.match.params.id} 
-                handleDeletedMovie= {this.handleDeletedMovie} 
-              />} 
+            <Route
+              path="/:movieTitle/:id"
+              render={(props) => (
+                <DetailsPage
+                  genres={genres}
+                  id={props.match.params.id}
+                  handleDeletedMovie={this.handleDeletedMovie}
+                />
+              )}
             />
 
-            <Route path="/add" 
-              render={(props) => <AddMovieForm />} 
+            <Route
+              path="/add"
+              render={(props) => <AddMovieForm genres={genres} />}
             />
-
           </Switch>
         </Router>
       </div>

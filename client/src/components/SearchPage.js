@@ -1,6 +1,5 @@
 import React from "react";
 
-
 import SearchBox from "./SearchBox";
 import Scroll from "./Scroll";
 import CardList from "./CardList";
