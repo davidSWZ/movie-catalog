@@ -1,43 +1,47 @@
-const express = require("express");
-const app = express();
-const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
-const cors = require("cors");
+const express = require('express')
+const app = express()
+const bodyParser = require('body-parser')
+const mongoose = require('mongoose')
+const cors = require('cors')
+const seedDB = require('./genreSeed')
 
-// Liaison au fichier .env
-require("dotenv").config();
+// Add genres to DB at first use of DB
+seedDB()
+
+// connection to .env file
+require('dotenv').config()
 
 // Cors configuration
-app.use(cors());
-app.use(cors({ origin: "*" }));
+app.use(cors())
+app.use(cors({ origin: '*' }))
 
 // bodyParser configuration
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 
 // Mongoose configuration
 mongoose.connect(process.env.DATABASEURL, {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error: "));
-db.once("open", function () {
-  console.log("the DB is opened");
-});
+  useUnifiedTopology: true
+})
+const db = mongoose.connection
+db.on('error', console.error.bind(console, 'connection error: '))
+db.once('open', function () {
+  console.log('the DB is opened')
+})
 
 /**
  * Routes configuration
  */
 
 // Movies
-var moviesRoutes = require("./routes/moviesRoutes.js");
-app.use("/api/movies", moviesRoutes);
+var moviesRoutes = require('./routes/moviesRoutes.js')
+app.use('/api/movies', moviesRoutes)
 
 // Genres
-var genresRoutes = require("./routes/genresRoutes.js");
-app.use("/api/genres", genresRoutes);
+var genresRoutes = require('./routes/genresRoutes.js')
+app.use('/api/genres', genresRoutes)
 
 app.listen(process.env.PORT, function () {
-  console.log("the server is running successfully");
-});
+  console.log('the server is running successfully')
+})
