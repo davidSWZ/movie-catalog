@@ -3,6 +3,8 @@ import { BrowserRouter as Redirect, Link } from "react-router-dom";
 
 import fetchAPI from "./api";
 import Poster from "./Poster";
+import VoteCheckboxes from "./VoteCheckBoxes";
+import GenreCheckBoxes from "./GenreCheckBoxes";
 
 class MovieForm extends Component {
   constructor(props) {
@@ -47,54 +49,6 @@ class MovieForm extends Component {
     this.setState({
       movie: { ...this.state.movie, [e.target.name]: e.target.value },
     });
-  };
-
-  createGenreCheckbox = (genres) => {
-    const checkBoxes = [];
-    for (const genre of genres) {
-      checkBoxes.push(
-        <div key={genre._id}>
-          <input
-            className="checkbox"
-            type="checkbox"
-            id={genre._id}
-            name="genre_ids"
-            value={genre._id}
-            onClick={(e) => this.handleGenresInput(e)}
-          />
-          <label className="details-info" htmlFor={genre._id}>
-            {genre.name}
-          </label>
-        </div>
-      );
-    }
-    return <div className="checkbox-container">{checkBoxes}</div>;
-  };
-
-  createNoteCheckbox = (elements) => {
-    const checkBoxes = [];
-    for (const element of elements) {
-      checkBoxes.push(
-        <div key={element}>
-          <input
-            className="checkbox"
-            type="radio"
-            id={element}
-            name="vote_average"
-            value={element}
-            onChange={(e) => this.handleChange(e)}
-            checked={
-              this.state.movie.vote_average.toString() === element.toString()
-            }
-          />
-          <label className="details-info" htmlFor={element}>
-            {element}
-          </label>
-        </div>
-      );
-    }
-
-    return <div className="checkbox-container">{checkBoxes}</div>;
   };
 
   saveNewMovie = (e) => {
@@ -200,14 +154,20 @@ class MovieForm extends Component {
               onChange={(e) => this.handleChange(e)}
             />
           </div>
-          <div className="poster-review">
+
+          {/* <div className="poster-review">
             <Poster movie={this.state.movie} />
-          </div>
+          </div> */}
 
           <label htmlFor="release_date" className="details-info">
             Genres
           </label>
-          <div>{this.createGenreCheckbox(this.props.genres)}</div>
+          <div>
+            <GenreCheckBoxes
+              genres={this.props.genres}
+              handleGenresInput={this.handleGenresInput}
+            />
+          </div>
           <div>
             <label htmlFor="release_date" className="details-info">
               Release date
@@ -223,8 +183,14 @@ class MovieForm extends Component {
               onChange={(e) => this.handleChange(e)}
             />
           </div>
-          <label className="details-info">Note</label>
-          <div>{this.createNoteCheckbox(["1", "2", "3", "4", "5"])}</div>
+          <label className="details-info">Vote</label>
+          <div>
+            <VoteCheckboxes
+              elements={["1", "2", "3", "4", "5"]}
+              vote_average={this.state.movie.vote_average}
+              handleChange={this.handleChange}
+            />
+          </div>
 
           {this.state.unfullfilled ? (
             <p className="details-info">
