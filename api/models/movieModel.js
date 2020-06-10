@@ -5,7 +5,7 @@ var movieSchema = new mongoose.Schema({
   poster_path: String,
   genre_ids: Array,
   vote_average: Number,
-  release_date: String, // TODO : change to Date format
+  release_date: Date, // TODO : change to Date format
 });
 
 module.exports = mongoose.model("movie", movieSchema);

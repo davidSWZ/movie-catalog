@@ -5,7 +5,7 @@ import React from "react";
  */
 function Poster(movie) {
   if (movie.movie.poster_path != null) {
-    let posterURL = "http://image.tmdb.org/t/p/w185" + movie.movie.poster_path;
+    let posterURL = movie.movie.poster_path;
     return <img src={posterURL} alt="movie poster" />;
   }
   return (

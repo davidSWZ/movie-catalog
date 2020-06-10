@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter as Redirect, Link } from "react-router-dom";
 
 import fetchAPI from "./api";
+import Poster from "./Poster";
 
 class MovieForm extends Component {
   constructor(props) {
@@ -25,17 +26,21 @@ class MovieForm extends Component {
     if (this.props.id == "new") return;
     fetchAPI
       .fetchData("http://localhost:8000/api/movies/", "get", this.props.id)
-      .then((selectedMovie) =>
+      .then((selectedMovie) => {
+        selectedMovie[0].release_date = selectedMovie[0].release_date.split(
+          "T"
+        )[0];
         this.setState({
           movie: {
             title: selectedMovie[0].title,
-            // poster_path: selectedMovie[0].poster_path,
+            poster_path: selectedMovie[0].poster_path,
             genre_ids: selectedMovie[0].genre_ids,
             release_date: selectedMovie[0].release_date,
             vote_average: selectedMovie[0].vote_average,
           },
-        })
-      );
+        });
+        console.log(this.state.movie);
+      });
   }
 
   handleChange = (e) => {
@@ -77,7 +82,10 @@ class MovieForm extends Component {
             id={element}
             name="vote_average"
             value={element}
-            onClick={(e) => this.handleChange(e)}
+            onChange={(e) => this.handleChange(e)}
+            checked={
+              this.state.movie.vote_average.toString() === element.toString()
+            }
           />
           <label className="details-info" htmlFor={element}>
             {element}
@@ -171,7 +179,7 @@ class MovieForm extends Component {
               name="title"
               value={title}
               className="add-form-input"
-              placeholder="title"
+              placeholder="Entre ther title"
               onChange={(e) => this.handleChange(e)}
             />
           </div>
@@ -181,15 +189,21 @@ class MovieForm extends Component {
                 Poster
               </label>
             </div>
+
             <input
-              type="file"
+              type="text"
               id="poster_path"
               name="poster_path"
               value={poster_path}
+              placeholder="Enter an url"
               className="add-form-input"
               onChange={(e) => this.handleChange(e)}
             />
           </div>
+          <div className="poster-review">
+            <Poster movie={this.state.movie} />
+          </div>
+
           <label htmlFor="release_date" className="details-info">
             Genres
           </label>
@@ -210,7 +224,7 @@ class MovieForm extends Component {
             />
           </div>
           <label className="details-info">Note</label>
-          <div>{this.createNoteCheckbox([1, 2, 3, 4, 5])}</div>
+          <div>{this.createNoteCheckbox(["1", "2", "3", "4", "5"])}</div>
 
           {this.state.unfullfilled ? (
             <p className="details-info">

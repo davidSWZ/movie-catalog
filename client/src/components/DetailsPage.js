@@ -21,6 +21,9 @@ class DetailsPage extends Component {
     fetchAPI
       .fetchData("http://localhost:8000/api/movies/", "get", this.props.id)
       .then((selectedMovie) => {
+        selectedMovie[0].release_date = selectedMovie[0].release_date.split(
+          "T"
+        )[0];
         this.setState({ movie: selectedMovie[0] });
         this.getGenreNames();
       });
