@@ -20,6 +20,24 @@ class MovieForm extends Component {
     };
   }
 
+  //get movie info from API and store it in state
+  componentDidMount() {
+    if (this.props.id == "new") return;
+    fetchAPI
+      .fetchData("http://localhost:8000/api/movies/", "get", this.props.id)
+      .then((selectedMovie) =>
+        this.setState({
+          movie: {
+            title: selectedMovie[0].title,
+            // poster_path: selectedMovie[0].poster_path,
+            genre_ids: selectedMovie[0].genre_ids,
+            release_date: selectedMovie[0].release_date,
+            vote_average: selectedMovie[0].vote_average,
+          },
+        })
+      );
+  }
+
   handleChange = (e) => {
     this.setState({
       movie: { ...this.state.movie, [e.target.name]: e.target.value },
@@ -73,31 +91,41 @@ class MovieForm extends Component {
 
   saveNewMovie = (e) => {
     e.preventDefault();
-    const {
-      title,
-      poster_path,
-      genre_ids,
-      release_date,
-      vote_average,
-    } = this.state.movie;
-    if (
-      title !== "" &&
-      poster_path !== "" &&
-      genre_ids.length !== 0 &&
-      release_date !== "" &&
-      vote_average !== ""
-    ) {
-      fetchAPI
-        .addMovie("http://localhost:8000/api/movies", this.state.movie)
-        .then((res) => {
-          if (res.success) {
-            this.setState({ changeCommited: true });
-          } else {
-            this.setState({ error: true });
-          }
-        });
+    if (this.controlForm()) {
+      this.sendData();
     } else {
       this.displayUnfullfilledFormMessage();
+    }
+  };
+
+  controlForm = () => {
+    if (
+      this.state.movie.title !== "" &&
+      this.state.movie.poster_path !== "" &&
+      this.state.movie.genre_ids.length !== 0 &&
+      this.state.movie.release_date !== "" &&
+      this.state.movie.vote_average !== ""
+    )
+      return true;
+  };
+
+  sendData = () => {
+    if (this.props.id == "new") {
+      fetchAPI.addMovie(this.state.movie).then((res) => {
+        if (res.success) {
+          this.setState({ changeCommited: true });
+        } else {
+          this.setState({ error: true });
+        }
+      });
+    } else {
+      fetchAPI.updateMovie(this.props.id, this.state.movie).then((res) => {
+        if (res.success) {
+          this.setState({ changeCommited: true });
+        } else {
+          this.setState({ error: true });
+        }
+      });
     }
   };
 

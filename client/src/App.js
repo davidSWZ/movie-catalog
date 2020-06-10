@@ -63,8 +63,10 @@ class App extends Component {
             />
 
             <Route
-              path="/add"
-              render={(props) => <AddMovieForm genres={genres} />}
+              path="/:id"
+              render={(props) => (
+                <AddMovieForm genres={genres} id={props.match.params.id} />
+              )}
             />
           </Switch>
         </Router>

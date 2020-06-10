@@ -35,6 +35,20 @@ router.get("/:id", function (req, res) {
 });
 
 /**
+ * Update movie
+ */
+router.put("/:id", function (req, res) {
+  const id = req.params.id;
+  movie.findOneAndUpdate({ _id: id }, req.body, function (err, foundMovie) {
+    if (err) {
+      res.send({ success: false });
+    } else {
+      res.send({ success: true });
+    }
+  });
+});
+
+/**
  * Add new movie to DB
  */
 router.post("/", function (req, res) {

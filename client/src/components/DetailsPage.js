@@ -103,9 +103,9 @@ class DetailsPage extends Component {
           <button>Back to search</button>
         </Link>
 
-        <button className="green-btn" onClick={() => null}>
-          Modify
-        </button>
+        <Link to={"/" + movie._id}>
+          <button className="green-btn">Modify</button>
+        </Link>
 
         <button className="delete-btn" onClick={() => this.handleDeleteData()}>
           Delete

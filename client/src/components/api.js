@@ -13,8 +13,8 @@ const fetchData = async (url, method, item) => {
   return response;
 };
 
-const addMovie = async (url, movie) => {
-  let fetchedData = await fetch(url, {
+const addMovie = async (movie) => {
+  let fetchedData = await fetch("http://localhost:8000/api/movies", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(movie),
@@ -23,4 +23,15 @@ const addMovie = async (url, movie) => {
   return response;
 };
 
-export default { fetchData, addMovie };
+const updateMovie = async (id, movie) => {
+  const request = "http://localhost:8000/api/movies/" + id; //Compose URL request
+  let fetchedData = await fetch(request, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(movie),
+  }); //Make the request
+  let response = await fetchedData.json(); //Parse the result from the API
+  return response;
+};
+
+export default { fetchData, addMovie, updateMovie };

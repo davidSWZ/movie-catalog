@@ -64,7 +64,7 @@ function SearchBox({ handleMovies }) {
         OK
       </button>
 
-      <Link to="/add">
+      <Link to="/new">
         <button className="green-btn">Add movie</button>
       </Link>
     </div>
