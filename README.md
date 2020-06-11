@@ -26,7 +26,7 @@ Delete a movie from the library
 
 To run the project on localhost:
 
-`DATABASE`
+## `DATABASE`
 
 Make sure you have mongoDB and npm installed
 
@@ -36,7 +36,7 @@ Start mongod
 
 `git clone https://github.com/davidSWZ/movie-catalog.git`
 
-`BACKEND`
+## `BACKEND`
 
 `cd api/`
 
@@ -48,7 +48,7 @@ Add DATABASURL parameter to reach your mongoDB repo and PORT parameter
 
 `npm start`
 
-`FRONTEND`
+## `FRONTEND`
 
 `cd client/`
 
