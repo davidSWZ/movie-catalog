@@ -159,7 +159,12 @@ button:focus {
 button {
   width: 100px;
   height: 60px;
-  background: $primary-color;
+  background: linear-gradient(
+    45deg,
+    rgba(17, 164, 212, 1) 0%,
+    rgba(17, 164, 212, 1) 38%,
+    rgb(16, 59, 200) 100%
+  );
   border: none;
   border-radius: 50px;
   margin-bottom: 0;
@@ -169,21 +174,23 @@ button {
 }
 
 .delete-btn {
-  background-color: rgb(173, 44, 27);
+  background: linear-gradient(
+    45deg,
+    rgb(212, 30, 17) 0%,
+    rgb(212, 30, 17) 0%,
+    rgb(200, 151, 16) 100%
+  );
   margin-left: 50px;
 }
 
 .green-btn {
-  background-color: rgb(27, 173, 76);
-  margin-left: 50px;
-}
-s .add-movie-btn {
   background: linear-gradient(
     45deg,
-    rgba(17, 164, 212, 1) 0%,
-    rgba(17, 164, 212, 1) 38%,
+    rgb(170, 212, 17) 0%,
+    rgba(170, 212, 17) 0%,
     rgba(16, 200, 89, 1) 100%
   );
+  margin-left: 50px;
 }
 
 .details-info {

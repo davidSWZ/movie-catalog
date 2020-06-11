@@ -13,7 +13,7 @@ function SearchBox({ handleMovies }) {
 
   //Setup for startCountDown function
   let typingTimer; //timer identifier
-  const typingDelay = 5000; //time in ms
+  const typingDelay = 2500; //time in ms
 
   //After typingDelay search movies on API
   const startCountDown = () => {

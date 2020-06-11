@@ -141,7 +141,7 @@ button:focus {
 button {
   width: 100px;
   height: 60px;
-  background: #256eb3;
+  background: linear-gradient(45deg, #11a4d4 0%, #11a4d4 38%, #103bc8 100%);
   border: none;
   border-radius: 50px;
   margin-bottom: 0;
@@ -151,17 +151,13 @@ button {
 }
 
 .delete-btn {
-  background-color: #ad2c1b;
+  background: linear-gradient(45deg, #d41e11 0%, #d41e11 0%, #c89710 100%);
   margin-left: 50px;
 }
 
 .green-btn {
-  background-color: #1bad4c;
+  background: linear-gradient(45deg, #aad411 0%, #aad411 0%, #10c859 100%);
   margin-left: 50px;
-}
-
-s .add-movie-btn {
-  background: linear-gradient(45deg, #11a4d4 0%, #11a4d4 38%, #10c859 100%);
 }
 
 .details-info {

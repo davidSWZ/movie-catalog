@@ -226,12 +226,19 @@ class MovieForm extends Component {
             <p className="details-info">An error occured</p>
           ) : null}
 
-          <button
-            className="add-movie-btn"
-            onClick={(e) => this.saveNewMovie(e)}
-          >
-            Add movie
-          </button>
+          <Link to="/">
+            <button>Return</button>
+          </Link>
+
+          {this.props.id == "new" ? (
+            <button className="green-btn" onClick={(e) => this.saveNewMovie(e)}>
+              Add movie
+            </button>
+          ) : (
+            <button className="green-btn" onClick={(e) => this.saveNewMovie(e)}>
+              modify movie
+            </button>
+          )}
         </form>
       </div>
     );
