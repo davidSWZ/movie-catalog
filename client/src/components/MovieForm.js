@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { BrowserRouter as Redirect, Link } from "react-router-dom";
 
 import fetchAPI from "./api";
-import Poster from "./Poster";
 import VoteCheckboxes from "./VoteCheckBoxes";
 import GenreCheckBoxes from "./GenreCheckBoxes";
 
@@ -25,7 +24,7 @@ class MovieForm extends Component {
 
   //get movie info from API and store it in state
   componentDidMount() {
-    if (this.props.id == "new") return;
+    if (this.props.id === "new") return;
     fetchAPI
       .fetchData("http://localhost:8000/api/movies/", "get", this.props.id)
       .then((selectedMovie) => {
@@ -59,7 +58,7 @@ class MovieForm extends Component {
         movie: {
           ...prevState.movie,
           genres: prevState.movie.genres.filter(
-            (genre) => checkBoxGenre != genre
+            (genre) => checkBoxGenre !== genre
           ),
         },
       }));
@@ -95,10 +94,11 @@ class MovieForm extends Component {
   };
 
   sendData = () => {
-    if (this.props.id == "new") {
+    if (this.props.id === "new") {
       fetchAPI.addMovie(this.state.movie).then((res) => {
         if (res.success) {
           this.setState({ changeCommited: true });
+          this.props.emptyMovieState();
         } else {
           this.setState({ error: true });
         }
@@ -107,6 +107,7 @@ class MovieForm extends Component {
       fetchAPI.updateMovie(this.props.id, this.state.movie).then((res) => {
         if (res.success) {
           this.setState({ changeCommited: true });
+          this.props.emptyMovieState();
         } else {
           this.setState({ error: true });
         }
@@ -131,9 +132,16 @@ class MovieForm extends Component {
     if (this.state.movie === undefined || this.state.changeCommited) {
       return (
         <div>
-          <h1 className="page-name">
-            Movie added successfully! Please come back to the landing page
-          </h1>
+          {this.props.id === "new" ? (
+            <h1 className="page-name">
+              Movie added successfully! Please come back to the landing page
+            </h1>
+          ) : (
+            <h1 className="page-name">
+              Movie modified successfully! Please come back to the landing page
+            </h1>
+          )}
+
           <Link to="/">
             <button>Back to search</button>
           </Link>
@@ -172,15 +180,11 @@ class MovieForm extends Component {
               id="poster_path"
               name="poster_path"
               value={poster_path}
-              placeholder="Enter an url"
+              placeholder="Enter an url (jpeg, jpg, gif, png)"
               className="add-form-input"
               onChange={(e) => this.handleChange(e)}
             />
           </div>
-
-          {/* <div className="poster-review">
-            <Poster movie={this.state.movie} />
-          </div> */}
 
           <label htmlFor="release_date" className="details-info">
             Genres
@@ -189,7 +193,7 @@ class MovieForm extends Component {
             <GenreCheckBoxes
               genres={this.props.genres}
               handleGenreCheckboxChange={this.handleGenreCheckboxChange}
-              movieGenres={this.state.movie.genres}
+              movieGenres={genres}
             />
           </div>
           <div>
@@ -211,7 +215,7 @@ class MovieForm extends Component {
           <div>
             <VoteCheckboxes
               elements={["1", "2", "3", "4", "5"]}
-              vote_average={this.state.movie.vote_average}
+              vote_average={vote_average}
               handleChange={this.handleChange}
             />
           </div>
@@ -230,7 +234,7 @@ class MovieForm extends Component {
             <button>Return</button>
           </Link>
 
-          {this.props.id == "new" ? (
+          {this.props.id === "new" ? (
             <button className="green-btn" onClick={(e) => this.saveNewMovie(e)}>
               Add movie
             </button>

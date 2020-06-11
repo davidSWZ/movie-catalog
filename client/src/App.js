@@ -33,6 +33,10 @@ class App extends Component {
     this.setState({ movies: movies });
   };
 
+  emptyMovieState = () => {
+    this.setState({ movies: [] });
+  };
+
   //Remove deleted movie from movie state
   handleDeletedMovie = (deletedMovieId) => {
     const movies = this.state.movies.filter(
@@ -65,7 +69,11 @@ class App extends Component {
             <Route
               path="/:id"
               render={(props) => (
-                <MovieForm genres={genres} id={props.match.params.id} />
+                <MovieForm
+                  genres={genres}
+                  id={props.match.params.id}
+                  emptyMovieState={this.emptyMovieState}
+                />
               )}
             />
           </Switch>
