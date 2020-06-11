@@ -1,4 +1,3 @@
-var mongoose = require('mongoose')
 var genre = require('./models/genreModel')
 
 var data = [
@@ -25,6 +24,7 @@ var data = [
   }
 ]
 
+// Add genres to DB at first use of DB
 function seedDB () {
   genre.find({}, function (err, genres) {
     if (err) {

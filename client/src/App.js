@@ -18,13 +18,8 @@ class App extends Component {
 
   //get all genres listed on API once
   componentDidMount() {
-    fetchAPI.fetchData("http://localhost:8000/api/genres", "get", "").then(
-      (genres) => {
-        this.setState({ genres: genres });
-      },
-      (error) => {
-        console.log(error);
-      }
+    fetchAPI.getData("http://localhost:8000/api/genres", "").then(
+      (genres) => { this.setState({ genres: genres })}
     );
   }
 
@@ -68,7 +63,7 @@ class App extends Component {
 
             <Route
               path="/:id"
-              render={(props) => (
+              render={    (props) => (
                 <MovieForm
                   genres={genres}
                   id={props.match.params.id}

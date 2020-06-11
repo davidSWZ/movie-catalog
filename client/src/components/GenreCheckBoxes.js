@@ -1,8 +1,10 @@
 import React from "react";
 
 /**
- * @param handleGenreCheckboxChange function that passes selected genres to parent component
- * @param genres genres of movies
+ * @param handleGenreCheckboxChange set movie genres state. 
+ * If box checked: add genre to state, if unchecked: delete it
+ * @param genres all genres of movies from API
+ * @param movieGenres genres of the movie
  */
 const GenreCheckBoxes = ({
   genres,
@@ -10,30 +12,41 @@ const GenreCheckBoxes = ({
   movieGenres,
 }) => {
   const checkBoxes = [];
-  console.log(genres);
-  console.log(movieGenres);
   for (const genre of genres) {
-    const isChecked = movieGenres.includes(genre.name);
+    const checked = movieGenres.includes(genre.name); //boolean : check if box was checked before any action
     checkBoxes.push(
+      
       <div key={genre._id}>
         <input
           className="checkbox"
           type="checkbox"
-          checked={isChecked}
+          checked={checked}
           name="genre"
           value={genre.name}
           onChange={(e) => {
             console.log(e);
-            handleGenreCheckboxChange(genre.name, isChecked);
+            handleGenreCheckboxChange(genre.name, checked);
           }}
         />
         <label className="details-info" htmlFor={genre.name}>
           {genre.name}
         </label>
       </div>
+      
     );
   }
-  return <div className="checkbox-container">{checkBoxes}</div>;
+  return (
+    <div>
+      <label htmlFor="release_date" className="details-info">
+        Genres
+      </label>
+
+      {/* All checkboxes */}
+      <div>
+        <div className="checkbox-container">{checkBoxes}</div>
+      </div>
+    </div>         
+  );
 };
 
 export default GenreCheckBoxes;

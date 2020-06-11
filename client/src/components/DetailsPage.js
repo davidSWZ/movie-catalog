@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-//todo Redirect not used but Link doesn't work if deleted?
+// @todo Redirect not used but Link doesn't work if deleted?
 import { BrowserRouter as Redirect, Link } from "react-router-dom";
 
 import fetchAPI from "./api";
@@ -14,56 +14,51 @@ class DetailsPage extends Component {
         poster_path: "",
         genres: [],
         release_date: "",
-        vote_average: "",
-      }, //result of one movie search
-      redirection: false, //used to redirect after movie deleted
-      error: false, //used if error during movie delete
+        note: "",
+      }, // the movie to be displayed
+      redirection: false, // used to redirect after movie is deleted
+      error: false, // used to display message if error during movie delete
     };
   }
 
-  //get movie info from API and store it in state
+  // get movie info from API and store it in state
   componentDidMount() {
-    fetchAPI
-      .fetchData("http://localhost:8000/api/movies/", "get", this.props.id)
-      .then((selectedMovie) => {
-        selectedMovie[0].release_date = selectedMovie[0].release_date.split(
-          "T"
-        )[0];
-        this.setState({ movie: selectedMovie[0] });
-      });
+    fetchAPI.getOneMovie(this.props.id)
+    .then(movie => {
+      this.setState({ movie : movie });
+    })
   }
 
-  //display all movie genres
+  // display all genres of the movie
   displayGenre = () => {
-    return this.state.movie.genres.map((genre) => {
-      return <span className="details-info genre">{genre}</span>;
+    return this.state.movie.genres.map((genre, index) => {
+      return <span key={index} className="details-info genre">{genre}</span>;
     });
   };
 
-  //Delete movie in DB
-  //then display redirect button
-  //then delete movie from state
+
   handleDeleteData = () => {
+    // Delete movie in DB
     fetchAPI
-      .fetchData(
-        "http://localhost:8000/api/movies/",
-        "delete",
-        this.state.movie._id
-      )
+      .deleteMovie(this.state.movie._id) 
       .then((res) => {
         if (res.success) {
-          this.setState({ redirection: true });
-          this.props.handleDeletedMovie(this.state.movie._id);
+          this.setState({ redirection: true }); // then display redirect button
+          this.props.handleDeletedMovie(this.state.movie._id);// then delete movie from movies state
         } else {
-          this.setState({ error: true });
+          this.setState({ error: true }); 
         }
       });
   };
 
-  //if not comming from searchPage, render button redirecting to searchPage
-  //@todo discuss if need to access to the page directly from the URL. SEO ?
+  
+  // @todo discuss if need to access to the page directly from the URL. SEO ?
   render() {
     const { movie, redirection, error } = this.state;
+
+    // if not comming from searchPage
+    // or if movie added or updated to DB
+    // render button redirecting to searchPage
     if (movie === undefined || redirection) {
       return (
         <div>
@@ -76,21 +71,26 @@ class DetailsPage extends Component {
         </div>
       );
     }
+
     // else return detailsPage
     return (
       <div>
         <h1 className="page-name">{movie.title}</h1>
+
         <div className="card detail-card">
           <Poster movie={movie} />
         </div>
+
         <p>
           Release date:
           <span className="details-info"> {movie.release_date} </span>
         </p>
+
         <p>
           Rating:
-          <span className="details-info"> {movie.vote_average} </span>{" "}
+          <span className="details-info"> {movie.note} </span>{" "}
         </p>
+        
         <p>Genre: {this.displayGenre()}</p>
 
         <Link to="/">

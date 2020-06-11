@@ -15,7 +15,11 @@ function SearchPage({ movies, handleMovies }) {
       <h1 className="page-name">MOVIE KATA.LOG</h1>
       <SearchBox handleMovies={handleMovies} />
       <Scroll>
-        {movies.length === 0 ? <p className="details-info">No result</p> : null}
+
+        {/*if no movie matching search, return "no result"*/}
+        {movies.length === 0 ? <p className="details-info">No result</p> : null} 
+
+        {/*Else, display movies list*/}
         <CardList movies={movies} />
       </Scroll>
     </div>

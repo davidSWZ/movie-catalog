@@ -4,8 +4,8 @@ var movieSchema = new mongoose.Schema({
   title: String,
   poster_path: String,
   genres: Array,
-  vote_average: Number,
-  release_date: Date // TODO : change to Date format
+  note: Number,
+  release_date: Date
 })
 
 module.exports = mongoose.model('movie', movieSchema)

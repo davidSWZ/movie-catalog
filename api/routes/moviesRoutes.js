@@ -3,14 +3,14 @@ var router = express.Router()
 var movie = require('../models/movieModel')
 
 /**
- * Get 10 first movies matching query from DB
+ * Get 10 first movies in DB matching query
  */
 router.get('/', function (req, res) {
   const search = req.query.search
   movie
     .find({ title: new RegExp(search, 'i') })
     .limit(10)
-    .sort({ title: 1 })
+    .sort({ title: 1 }) // Sort in alphabetic order
     .exec(function (err, movies) {
       if (err) {
         res.send(err)
@@ -21,7 +21,7 @@ router.get('/', function (req, res) {
 })
 
 /**
- * Get one movie from the DB
+ * Get one movie from the DB matching id
  */
 router.get('/:id', function (req, res) {
   const id = req.params.id
@@ -35,7 +35,7 @@ router.get('/:id', function (req, res) {
 })
 
 /**
- * Update movie
+ * Update movie matching id
  */
 router.put('/:id', function (req, res) {
   const id = req.params.id
@@ -56,7 +56,7 @@ router.post('/', function (req, res) {
     title: req.body.title,
     poster_path: req.body.poster_path,
     genres: req.body.genres,
-    vote_average: req.body.vote_average,
+    note: req.body.note,
     release_date: req.body.release_date
   }
   movie.create(newMovie, function (err, movie) {
@@ -71,7 +71,7 @@ router.post('/', function (req, res) {
 })
 
 /**
- * Delete one movie
+ * Delete one movie matching id
  */
 router.delete('/:id', function (req, res) {
   const id = req.params.id

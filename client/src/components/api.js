@@ -1,17 +1,23 @@
 /**
+ * search movies, or genres in API
  * @param url API url
- * @param method CRUD method
- * @param item parameter to fetch in API (query or params)
+ * @param id id to fetch in API
  */
-
-const fetchData = async (url, method, item) => {
-  const request = url + item; //Compose URL request
-  let fetchedData = await fetch(request, {
-    method: method,
-  }); //Make the request
-  let response = await fetchedData.json(); //Parse the result from the API
+const getData = async (url, id) => {
+  const request = url + id; 
+  let fetchedData = await fetch(request); //Make the request
+  let response = await fetchedData.json(); //Parse the result
   return response;
 };
+
+const getOneMovie = async ( id ) => {
+  const request = "http://localhost:8000/api/movies/" + id; 
+  let fetchedData = await fetch(request); //Make the request
+  let response = await fetchedData.json(); //Parse the result from the API
+  // handle the date format to only keep dd/mm/yyyy format
+  response[0].release_date = response[0].release_date.split("T")[0]; 
+  return response[0];
+}
 
 const addMovie = async (movie) => {
   let fetchedData = await fetch("http://localhost:8000/api/movies", {
@@ -24,7 +30,7 @@ const addMovie = async (movie) => {
 };
 
 const updateMovie = async (id, movie) => {
-  const request = "http://localhost:8000/api/movies/" + id; //Compose URL request
+  const request = "http://localhost:8000/api/movies/" + id;
   let fetchedData = await fetch(request, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
@@ -34,4 +40,13 @@ const updateMovie = async (id, movie) => {
   return response;
 };
 
-export default { fetchData, addMovie, updateMovie };
+const deleteMovie = async (id) => {
+  const request = "http://localhost:8000/api/movies/" + id;
+  let fetchedData = await fetch(request, {
+    method: "delete",
+  }); //Make the request
+  let response = await fetchedData.json(); //Parse the result from the API
+  return response;
+};
+
+export default { getData, getOneMovie, addMovie, updateMovie, deleteMovie };

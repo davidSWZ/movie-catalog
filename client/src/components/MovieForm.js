@@ -1,23 +1,26 @@
 import React, { Component } from "react";
+// @todo Redirect not used but Link doesn't work if deleted?
 import { BrowserRouter as Redirect, Link } from "react-router-dom";
 
 import fetchAPI from "./api";
-import VoteCheckboxes from "./VoteCheckBoxes";
+import NoteCheckboxes from "./NoteCheckBoxes";
 import GenreCheckBoxes from "./GenreCheckBoxes";
+import SimpleInput from "./SimpleInput";
+import RedirectPage from "./RedirectPage";
 
 class MovieForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      error: false,
-      unfullfilled: false,
+      error: false, // used to display warning message if API request unsuccessfull
+      unfullfilled: false, // used to display warning if all input no filled
       changeCommited: false, //used to redirect after movie added or modified
       movie: {
         title: "",
         poster_path: "",
         genres: [],
         release_date: "",
-        vote_average: "",
+        note: "",
       },
     };
   }
@@ -25,35 +28,20 @@ class MovieForm extends Component {
   //get movie info from API and store it in state
   componentDidMount() {
     if (this.props.id === "new") return;
-    fetchAPI
-      .fetchData("http://localhost:8000/api/movies/", "get", this.props.id)
-      .then((selectedMovie) => {
-        selectedMovie[0].release_date = selectedMovie[0].release_date.split(
-          "T"
-        )[0];
-        this.setState({
-          movie: {
-            title: selectedMovie[0].title,
-            poster_path: selectedMovie[0].poster_path,
-            genres: selectedMovie[0].genres,
-            release_date: selectedMovie[0].release_date,
-            vote_average: selectedMovie[0].vote_average,
-          },
-        });
-      });
+    fetchAPI.getOneMovie(this.props.id)
+    .then(movie => this.setState({ movie : movie }))
   }
 
+  // Set movie state with inputs values
   handleChange = (e) => {
     this.setState({
       movie: { ...this.state.movie, [e.target.name]: e.target.value },
     });
   };
 
-  handleGenreCheckboxChange = (checkBoxGenre, isChecked) => {
-    console.log("handleGenreCheckboxChange " + isChecked);
-
-    if (isChecked) {
-      // on vient de le decocher
+  // Set movie.genres state with checkboxes values
+  handleGenreCheckboxChange = (checkBoxGenre, checked) => {
+    if (checked) { // we uncheck the box : remove genre
       this.setState((prevState) => ({
         movie: {
           ...prevState.movie,
@@ -62,8 +50,7 @@ class MovieForm extends Component {
           ),
         },
       }));
-    } else {
-      // On vient de le cocher
+    } else { // we check the box : add genre
       this.setState((prevState) => ({
         movie: {
           ...prevState.movie,
@@ -78,36 +65,39 @@ class MovieForm extends Component {
     if (this.controlForm()) {
       this.sendData();
     } else {
-      this.displayUnfullfilledFormMessage();
+      this.warningMessage();
     }
   };
 
   controlForm = () => {
+    const { title, poster_path, genres, release_date, note } = this.state.movie; 
     if (
-      this.state.movie.title !== "" &&
-      this.state.movie.poster_path !== "" &&
-      this.state.movie.genres.length !== 0 &&
-      this.state.movie.release_date !== "" &&
-      this.state.movie.vote_average !== ""
+      title !== "" &&
+      poster_path !== "" &&
+      genres.length !== 0 &&
+      release_date !== "" &&
+      note !== ""
     )
       return true;
   };
 
   sendData = () => {
+    // if new movie : add it in DB
     if (this.props.id === "new") {
       fetchAPI.addMovie(this.state.movie).then((res) => {
         if (res.success) {
           this.setState({ changeCommited: true });
-          this.props.emptyMovieState();
+          this.props.emptyMovieState(); // used to reinitialize searchPage before redirect to it
         } else {
           this.setState({ error: true });
         }
       });
+      // if existing movie : modify it in DB
     } else {
       fetchAPI.updateMovie(this.props.id, this.state.movie).then((res) => {
         if (res.success) {
           this.setState({ changeCommited: true });
-          this.props.emptyMovieState();
+          this.props.emptyMovieState(); // used to reinitialize searchPage before redirect to it
         } else {
           this.setState({ error: true });
         }
@@ -115,117 +105,68 @@ class MovieForm extends Component {
     }
   };
 
-  displayUnfullfilledFormMessage = () => {
+  // used to display warning message when all input are not filled
+  // message displayed 5s
+  warningMessage = () => {
     this.setState({ unfullfilled: true });
     setTimeout(() => this.setState({ unfullfilled: false }), 5000);
   };
 
   render() {
-    const {
-      title,
-      poster_path,
-      genres,
-      release_date,
-      vote_average,
-    } = this.state.movie;
+    const { title, poster_path, genres, release_date, note } = this.state.movie;
 
+    //if not comming directly to the page or if change made successfully in BD 
     if (this.state.movie === undefined || this.state.changeCommited) {
-      return (
-        <div>
-          {this.props.id === "new" ? (
-            <h1 className="page-name">
-              Movie added successfully! Please come back to the landing page
-            </h1>
-          ) : (
-            <h1 className="page-name">
-              Movie modified successfully! Please come back to the landing page
-            </h1>
-          )}
-
-          <Link to="/">
-            <button>Back to search</button>
-          </Link>
-        </div>
-      );
+      return <RedirectPage id={this.props.id} />
     }
+    // Else return form
     return (
       <div>
         <h1 className="page-name">MOVIE FORM</h1>
         <form>
-          <div>
-            <div>
-              <label htmlFor="title" className="details-info">
-                Title
-              </label>
-            </div>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              value={title}
-              className="add-form-input"
-              placeholder="Entre ther title"
-              onChange={(e) => this.handleChange(e)}
-            />
-          </div>
-          <div>
-            <div>
-              <label htmlFor="poster_path" className="details-info">
-                Poster
-              </label>
-            </div>
+        <SimpleInput 
+          attribute="title" 
+          type="text" 
+          value={title} 
+          placeHolder="Entre ther title"
+          handleChange={this.handleChange}
+          />
 
-            <input
-              type="text"
-              id="poster_path"
-              name="poster_path"
-              value={poster_path}
-              placeholder="Enter an url (jpeg, jpg, gif, png)"
-              className="add-form-input"
-              onChange={(e) => this.handleChange(e)}
-            />
-          </div>
+        <SimpleInput 
+          attribute="poster_path" 
+          type="text" 
+          value={poster_path} 
+          placeHolder="Enter an url (jpeg, jpg, gif, png)"
+          handleChange={this.handleChange}
+          />
 
-          <label htmlFor="release_date" className="details-info">
-            Genres
-          </label>
-          <div>
-            <GenreCheckBoxes
-              genres={this.props.genres}
-              handleGenreCheckboxChange={this.handleGenreCheckboxChange}
-              movieGenres={genres}
-            />
-          </div>
-          <div>
-            <label htmlFor="release_date" className="details-info">
-              Release date
-            </label>
-          </div>
-          <div>
-            <input
-              type="date"
-              id="release_date"
-              name="release_date"
-              value={release_date}
-              className="add-form-input"
-              onChange={(e) => this.handleChange(e)}
-            />
-          </div>
-          <label className="details-info">Vote</label>
-          <div>
-            <VoteCheckboxes
-              elements={["1", "2", "3", "4", "5"]}
-              vote_average={vote_average}
-              handleChange={this.handleChange}
-            />
-          </div>
+        <GenreCheckBoxes
+            genres={this.props.genres}
+            handleGenreCheckboxChange={this.handleGenreCheckboxChange}
+            movieGenres={genres}
+          />
 
+        <SimpleInput 
+          attribute="release_date" 
+          type="date" 
+          value={release_date} 
+          handleChange={this.handleChange}
+          />
+         
+        <NoteCheckboxes
+          values={["1", "2", "3", "4", "5"]}
+          note={note}
+          handleChange={this.handleChange}
+          />
+
+          {/* Checked if all inputs are filled, if not display warning */}
           {this.state.unfullfilled ? (
             <p className="details-info">
               please fill all entries in the form before saving
             </p>
           ) : null}
 
+          {/* if API request is not successfull : display warning */}
           {this.state.error ? (
             <p className="details-info">An error occured</p>
           ) : null}
@@ -234,6 +175,7 @@ class MovieForm extends Component {
             <button>Return</button>
           </Link>
 
+          {/* If url param = new : display add button, if not display modify button */}
           {this.props.id === "new" ? (
             <button className="green-btn" onClick={(e) => this.saveNewMovie(e)}>
               Add movie
